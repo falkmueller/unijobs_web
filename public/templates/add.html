@@ -1,24 +1,28 @@
-<view-title>Hinzufügen</view-title>
+<view-title>Job Hinzufügen</view-title>
 
-<form name="myFormNg" ng-submit="AddEntity(Entity)">
-  <div class="form-group">
-    <label for="kennung">Kennung</label>
-    <input type="text" class="form-control" id="kennung" placeholder="kennung" ng-model="Entity.kennung">
+<div class="panel panel-default">
+  <div class="panel-body">   
+    <form name="myFormNg" ng-submit="AddEntity(Entity)">
+      <div class="form-group">
+        <label for="kennung">Kennung</label>
+        <input type="text" class="form-control" id="kennung" placeholder="kennung" ng-model="Entity.kennung">
+      </div>
+      <div class="form-group">
+        <label for="testtext">testtext</label>
+        <input type="text" class="form-control" id="testtext" placeholder="testtext" ng-model="Entity.testtext">
+      </div>
+
+        <div class="form-group">
+        <label for="benutzername">benutzername</label>
+        <input type="text" class="form-control" id="benutzername" placeholder="benutzername" ng-model="Entity.benutzername">
+      </div>
+
+        <div class="form-group">
+        <label for="passwort">passwort</label>
+        <input type="password" class="form-control" id="passwort" placeholder="passwort" ng-model="Entity.passwort">
+      </div>
+
+      <button type="submit" class="btn btn-default" ng-disabled="myFormNg.$invalid">Absenden</button>
+    </form>
   </div>
-  <div class="form-group">
-    <label for="testtext">testtext</label>
-    <input type="text" class="form-control" id="testtext" placeholder="testtext" ng-model="Entity.testtext">
-  </div>
-    
-    <div class="form-group">
-    <label for="benutzername">benutzername</label>
-    <input type="text" class="form-control" id="benutzername" placeholder="benutzername" ng-model="Entity.benutzername">
-  </div>
-    
-    <div class="form-group">
-    <label for="passwort">passwort</label>
-    <input type="password" class="form-control" id="passwort" placeholder="passwort" ng-model="Entity.passwort">
-  </div>
-    
-  <button type="submit" class="btn btn-default" ng-disabled="myFormNg.$invalid">Absenden</button>
-</form>
+</div>

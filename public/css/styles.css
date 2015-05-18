@@ -1,5 +1,17 @@
 /*styles*/
 
+.header {background-color: #0099ff; color: #FFF;}
+.header .logo {float: left; line-height: 44px; font-size: 24px; margin: 0 10px;}
+.header .logo img {height: 35px;}
+.header h1 {display: inline-block; line-height: 50px; font-size: 24px; text-indent: 10px; margin: 0;}
+
+.navbar-default {background-color: #414141; min-height: 30px; border-radius:0; border-left: 0; border-right: 0;}
+.navbar-default .navbar-nav > li > a {padding-bottom: 9px; padding-top: 8px;}
+.navbar-default .navbar-form {margin-top: 5px; margin-bottom: 5px;}
+.navbar-default .form-control {height: 25px; padding: 2px 12px;}
+.navbar-default .navbar-form .btn {line-height: 25px; padding: 0 12px;}
+.navbar-default .navbar-nav > li > a {color: #FFF;}
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {color: #e7e7e7;}
 /* ANIMATIONS
 ============================================================================= */
 
