@@ -3,7 +3,9 @@
   "require":
   {
 	"twitter/bootstrap": "*",
-     	"jquery/jquery": "*"
+     	"jquery/jquery": "*",
+        "angularjs/angular": "*",
+        "angularjs/angular-route": "*"
   },
   "repositories": [
     {
@@ -27,6 +29,30 @@
         "dist": {
           "url": "https://github.com/twbs/bootstrap/releases/download/v3.3.4/bootstrap-3.3.4-dist.zip",
           "type": "zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "angularjs/angular",
+        "version": "1.3.15",
+        "type": "angularjs/angular",
+        "dist": {
+          "url": "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js",
+          "type": "file"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "angularjs/angular-route",
+        "version": "1.3.15",
+        "type": "angularjs/angular-route",
+        "dist": {
+          "url": "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.js",
+          "type": "file"
         }
       }
     }

@@ -8,6 +8,8 @@ FileSystem::copy(__dir__."/vendor/jquery/jquery", __dir__."/public/js");
 FileSystem::copy(__dir__."/vendor/twitter/bootstrap/js", __dir__."/public/js");
 FileSystem::copy(__dir__."/vendor/twitter/bootstrap/css", __dir__."/public/css");
 FileSystem::copy(__dir__."/vendor/twitter/bootstrap/fonts", __dir__."/public/fonts");
+FileSystem::copy(__dir__."/vendor/angularjs/angular", __dir__."/public/js");
+FileSystem::copy(__dir__."/vendor/angularjs/angular-route", __dir__."/public/js");
 
 class FileSystem {
     public static function makeDir($path)
