@@ -1,7 +1,28 @@
-Webanwendung
+Webanwendung:
     - composer ausführen
 
-fuseki Webbapp
+fuseki Webbapp:
     - Archiv herunterladen: http://jena.apache.org/documentation/serving_data/
     - war-Datei im Tomcat installieren
-    - /etc/fuseki order anlegen und der Gruppe "tomcat" lese/schreibrechte geben 
+    - /etc/fuseki order anlegen und der Gruppe "tomcat" lese/schreibrechte geben
+    - im Browser-Backend einen neuen Dataset namens "ds" anlegen
+
+Für Webanwendung Tomcat user anpassen: 
+	- /etc/tomcat7/tomcat-users.xml: 
+		- neue Rolle anlegen: <role rolename="Fuseki-update"/>
+		- neuen Nutzer anlegen: <user username="test" password="test" roles="Fuseki-update"/>
+	- /var/lib/tomcat7/webapps/fuseki/WEB-INF/wb.xml:
+		- authentifizierung hinzufügen:
+			  <security-constraint>
+			    <web-resource-collection>
+			      <web-resource-name>Fuseki-update Area</web-resource-name>
+			      <url-pattern>/ds/update</url-pattern>
+			    </web-resource-collection>
+			    <auth-constraint>
+			      <role-name>Fuseki-update</role-name>
+			    </auth-constraint>
+			  </security-constraint>
+			  <login-config>
+			    <auth-method>BASIC</auth-method>
+			    <realm-name>Fuseki-update Area</realm-name>
+			  </login-config> 

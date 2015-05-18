@@ -2,8 +2,11 @@ app.config(function($routeProvider) {
     $routeProvider.
       when('/start', {
         templateUrl: 'templates/start.html',
-        controller: 'StartController',
-        accessLevel: 0
+        controller: 'StartController'
+      }).
+      when('/add', {
+        templateUrl: 'templates/add.html',
+        controller: 'AddController'
       }).
      otherwise({
         redirectTo: '/start'

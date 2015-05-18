@@ -18,4 +18,28 @@ function test(){
                 success: function(res){console.log(res);},
                 error: function(res){console.log(res);}
               });
+              
+              
+//              data = {update: "PREFIX dc: <http://leemia.de/> INSERT DATA { dc:ttt    dc:title    \"Test Job\" ; dc:creator  \"A.N.Other\" .}"};
+//              
+//               $.ajax({
+//                url: "http://localhost:8080/fuseki/ds/update",
+//                method: "POST",
+//                data: data,
+//                success: function(res){console.log(res);},
+//                error: function(res){console.log(res);}
+//              });
+
+              data = {update: "PREFIX dc: <http://leemia.de/> INSERT DATA { dc:ttt    dc:title    \"Test Job\" ; dc:creator  \"A.N.Other\" .}"};
+              
+               $.ajax({
+                url: "http://test:test@localhost:8080/fuseki/ds/update",
+                method: "POST",
+                data: data,
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(res){console.log(res);},
+                error: function(res){console.log(res);}
+              });
 }

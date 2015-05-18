@@ -1,3 +1,3 @@
 /*App Initialisazion ###########################################################*/
-app = angular.module('myApp', ['ngRoute', 'linkactivation','viewTitle']);
+app = angular.module('myApp', ['ngRoute', 'ngAnimate', 'linkactivation','viewTitle']);
  
