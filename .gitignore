@@ -1,0 +1,10 @@
+# Untracked files:
+composer.phar
+composer.lock
+# Untracked folder:
+vendor
+public/css/bootstrap*
+public/fonts/glyphicons*
+public/js/npm.js
+public/js/bootstrap*
+public/js/jquery*

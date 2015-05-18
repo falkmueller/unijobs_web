@@ -1,0 +1,42 @@
+{
+  "name": "foo/bar",
+  "require":
+  {
+	"twitter/bootstrap": "*",
+     	"jquery/jquery": "*"
+  },
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "jquery/jquery",
+        "version": "1.11.3",
+        "type": "jquery/jquery",
+        "dist": {
+          "url": "http://code.jquery.com/jquery-1.11.3.min.js",
+          "type": "file"
+        }
+      }
+    },
+{
+      "type": "package",
+      "package": {
+        "name": "twitter/bootstrap",
+        "version": "3.3.4",
+        "type": "twitter/bootstrap",
+        "dist": {
+          "url": "https://github.com/twbs/bootstrap/releases/download/v3.3.4/bootstrap-3.3.4-dist.zip",
+          "type": "zip"
+        }
+      }
+    }
+  ],
+"scripts": {
+        "post-install-cmd": [
+            "php install.php"
+        ],
+        "post-update-cmd": [
+            "php install.php"
+        ]
+    }
+}

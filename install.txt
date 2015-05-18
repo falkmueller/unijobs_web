@@ -1,0 +1,7 @@
+Webanwendung
+    - composer ausführen
+
+fuseki Webbapp
+    - Archiv herunterladen: http://jena.apache.org/documentation/serving_data/
+    - war-Datei im Tomcat installieren
+    - /etc/fuseki order anlegen und der Gruppe "tomcat" lese/schreibrechte geben 
