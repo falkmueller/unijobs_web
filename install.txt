@@ -11,7 +11,7 @@ Für Webanwendung Tomcat user anpassen:
 	- /etc/tomcat7/tomcat-users.xml: 
 		- neue Rolle anlegen: <role rolename="Fuseki-update"/>
 		- neuen Nutzer anlegen: <user username="test" password="test" roles="Fuseki-update"/>
-	- /var/lib/tomcat7/webapps/fuseki/WEB-INF/wb.xml:
+	- /var/lib/tomcat7/webapps/fuseki/WEB-INF/web.xml:
 		- authentifizierung hinzufügen:
 			  <security-constraint>
 			    <web-resource-collection>

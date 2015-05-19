@@ -12,9 +12,19 @@ app.controller('StartController', function($scope, $http){
               
 });
 
+app.controller('InfoController', function($scope){
+    
+});
+
 app.controller('AddController', function($scope){
     $scope.AddEntity = function(Entity){
          
          AddJob(Entity.benutzername, Entity.passwort, Entity);
      };
+     
+     GetAllUnis(function(res){
+                  $scope.$apply(function () {
+                        $scope.unis = res;
+                     });
+              });
 });

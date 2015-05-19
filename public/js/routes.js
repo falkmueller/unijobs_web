@@ -8,6 +8,10 @@ app.config(function($routeProvider) {
         templateUrl: 'templates/add.html',
         controller: 'AddController'
       }).
+     when('/info', {
+        templateUrl: 'templates/info.html',
+        controller: 'InfoController'
+      }).
      otherwise({
         redirectTo: '/start'
       });

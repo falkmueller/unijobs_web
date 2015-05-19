@@ -1,0 +1,52 @@
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+	xmlns:owl="http://www.w3.org/2002/07/owl#"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xml:base="http://www.leemia.de/seminar/rdf"
+        xml:dbres="http://dbpedia.org/resource/">
+
+<owl:Ontology rdf:about=""> 
+  <rdfs:comment>Uni Job Ontology</rdfs:comment>
+  <rdfs:label>Uni Job Ontology</rdfs:label> 
+</owl:Ontology> 
+
+<owl:Class rdf:about="job">
+		<rdfs:label>A Uni Job</rdfs:label>
+		<rdfs:comment>The class of a uni job.</rdfs:comment>
+	</owl:Class>
+
+<owl:ObjectProperty rdf:ID="in_uni" rdf:type="owl#ObjectProperty">
+                <rdfs:label>in Uni</rdfs:label>
+                <rdfs:comment>Relation between Job ans Uni.</rdfs:comment>
+		<rdfs:domain rdf:resource="#job"/>
+              <rdfs:range rdf:resource="dbres#Public_university"/>
+        </owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:ID="has_jobs">
+                <rdfs:label>has jobs</rdfs:label>
+                <rdfs:comment>Relation between Job ans Uni.</rdfs:comment>
+		<rdfs:domain rdf:resource="dbres#Public_university"/>
+                <rdfs:range rdf:resource="#job"/>
+                <owl:inverseOf rdf:resource="#in_uni" />
+</owl:ObjectProperty>
+	
+    <owl:DatatypeProperty rdf:ID="title">
+                <rdfs:label>Title of the Job</rdfs:label>
+                <rdfs:comment>Title of the Job</rdfs:comment>
+            <rdfs:domain rdf:resource="#job" />
+            <rdfs:range rdf:resource="xsd#string" />
+        </owl:DatatypeProperty>
+
+        <owl:DatatypeProperty rdf:ID="description" >
+                <rdfs:label>Job Description</rdfs:label>
+                <rdfs:comment>Job Description</rdfs:comment>
+            <rdfs:domain rdf:resource="#job" />
+            <rdfs:range rdf:resource= "xsd#string" />
+        </owl:DatatypeProperty>
+</rdf:RDF>
+
+
+
+

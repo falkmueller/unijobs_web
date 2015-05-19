@@ -4,12 +4,19 @@
   <div class="panel-body">   
     <form name="myFormNg" ng-submit="AddEntity(Entity)">
       <div class="form-group">
-        <label for="kennung">Kennung</label>
-        <input type="text" class="form-control" id="kennung" placeholder="kennung" ng-model="Entity.kennung">
+        <label for="title">Titel</label>
+        <input type="text" class="form-control" id="title" placeholder="title" ng-model="Entity.title">
       </div>
       <div class="form-group">
-        <label for="testtext">testtext</label>
-        <input type="text" class="form-control" id="testtext" placeholder="testtext" ng-model="Entity.testtext">
+        <label for="description">Beschreibung</label>
+        <textarea class="form-control" id="description" placeholder="Beschreibung" ng-model="Entity.description"></textarea>
+      </div>
+        
+      <div class="form-group">
+        <label for="uni">uni</label>
+        <select class="form-control" id="uni" ng-model="Entity.uni">       
+            <option ng-repeat="uni in unis" value="{{uni.uni.value}}">{{uni.name.value}}</option>
+        </select>
       </div>
 
         <div class="form-group">
