@@ -1,6 +1,7 @@
 /*****************************************
  * General Functions
  * ****************************************/
+
 function GetRandom(){
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
@@ -71,8 +72,8 @@ function toggle_console(){
 function AddJob(Apiuser, ApiPassword, Job){
                var jobId = GetRandom();
     
-             var query = "PREFIX dc: <http://leemia.de/> \n"
-                          + " PREFIX  onto: <http://localhost:8080/unijobs/public/ontology.rdf#>\n"
+             var query = "PREFIX dc: <http://tomcat.falk-m.de/> \n"
+                          + " PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#>\n"
                           + " PREFIX dbres: <http://dbpedia.org/resource/>\n"
                           + " PREFIX dbonto: <http://dbpedia.org/ontology/>\n"
                           + " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
@@ -86,7 +87,7 @@ function AddJob(Apiuser, ApiPassword, Job){
                 Console("Abruf aller unis von DBPedia", query);
               
                $.ajax({
-                url: "http://" + Apiuser + ":" + ApiPassword + "@localhost:8080/fuseki/ds/update",
+                url: "http://" + Apiuser + ":" + ApiPassword + "@" + location.host +"/fuseki/ds/update",
                 method: "POST",
                 data: {update: query},
                 xhrFields: {
@@ -122,6 +123,7 @@ function GetAllUnis(CallBackFn){
                $.ajax({
                 url: url,
                 method: "GET",
+                dataType: "jsonp",
                 success: function(res){
                     CallBackFn(res.results.bindings);
             },
@@ -130,8 +132,8 @@ function GetAllUnis(CallBackFn){
 }
 
 function GetJobs(CallBackFn){
-    var query = "PREFIX dc: <http://leemia.de/> \n" +
-                "PREFIX  onto: <http://localhost:8080/unijobs/public/ontology.rdf#> \n" +
+    var query = "PREFIX dc: <http://tomcat.falk-m.de/> \n" +
+                "PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#> \n" +
                 "PREFIX dbonto: <http://dbpedia.org/ontology/> \n" +
                 "PREFIX dbres: <http://dbpedia.org/resource/> \n" +
                 "PREFIX dbprop: <http://dbpedia.org/property/> \n" +
@@ -152,7 +154,7 @@ function GetJobs(CallBackFn){
         Console("Abruf aller Jobs", query);
               
                $.ajax({
-                url: "http://localhost:8080/fuseki/ds/query",
+                url: "/fuseki/ds/query",
                 method: "POST",
                 data: {query: query},
                 success: function(res){
