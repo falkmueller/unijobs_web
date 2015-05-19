@@ -1,6 +1,16 @@
 <view-title>Uni Jobs Suchen</view-title>
-<h1>Start</h1>
+<h1>Übersicht</h1>
 
-<div ng-repeat="obj in items">
-  {{obj.object.value}}
+<div class="table">
+    <div class="row header">
+        <div class="col-sm-4">Job Bezeichnung</div>
+        <div class="col-sm-4">Universität</div>
+        <div class="col-sm-4">Stadt</div>
+    </div>
+    <div class="row" ng-repeat="obj in items">
+        <div class="col-sm-4">{{obj.jobtitle.value}}</div>
+        <div class="col-sm-4">{{obj.uniname.value}}</div>
+        <div class="col-sm-4">{{obj.cityname.value}}</div>
+      <!--{{obj.job.value}}-->
+    </div>
 </div>

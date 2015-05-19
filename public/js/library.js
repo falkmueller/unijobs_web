@@ -12,6 +12,16 @@ function RemoveMessages(){
   $('div[id^="message_"]').remove(); 
 }
 
+function htmlEscape(str) {
+    return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(new RegExp('\r?\n','g'), '<br />');
+}
+
 function AddMessage(key, message, type){
      var time = '5000';
     var $container = $('#messagecontainer');
@@ -28,6 +38,32 @@ function AddMessage(key, message, type){
     }, time);
 }
 
+function Console(headline, Message){
+    $("#console").append("<div class=\"headline\">" + headline + "</div>");
+    $("#console").append("<div class=\"body\">" + htmlEscape(Message) + "</div>");
+}
+
+/*****************************************
+ * init
+ * ****************************************/
+$(document).ready(function(){
+    $("#toggle_console").click(function(){
+        toggle_console();
+    });
+});
+
+function toggle_console(){
+    if ($("#console").is(":visible")){
+        //ausblenden
+        $("#console").addClass("hide");
+        $("#toggle_console").removeClass("in");
+    } else {
+        //einblenden
+        $("#console").removeClass("hide");
+         $("#toggle_console").addClass("in");
+    }
+}
+
 /*****************************************
  * Sparql Functions
  * ****************************************/
@@ -35,22 +71,24 @@ function AddMessage(key, message, type){
 function AddJob(Apiuser, ApiPassword, Job){
                var jobId = GetRandom();
     
-             var data = {update: "PREFIX dc: <http://leemia.de/> "
-                          + " PREFIX  onto: <http://localhost:8080/unijobs/public/ontology.rdf#>"
-                          + " PREFIX dbres: <http://dbpedia.org/resource/>"
-                          + " PREFIX dbonto: <http://dbpedia.org/ontology/>"
-                          + " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
-                          + " INSERT DATA { dc:Job_" + jobId + ""    
-				+ " rdf:type onto:job;"
-                                + " onto:title \"" + Job.title + "\";"
-                                + " onto:description \"" + Job.description + "\";"
-                                + " onto:in_uni <" + Job.uni + ">"
-                            + ".}"};
+             var query = "PREFIX dc: <http://leemia.de/> \n"
+                          + " PREFIX  onto: <http://localhost:8080/unijobs/public/ontology.rdf#>\n"
+                          + " PREFIX dbres: <http://dbpedia.org/resource/>\n"
+                          + " PREFIX dbonto: <http://dbpedia.org/ontology/>\n"
+                          + " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
+                          + " INSERT DATA { dc:Job_" + jobId + "\n"    
+				+ " rdf:type onto:job;\n"
+                                + " onto:title \"" + Job.title + "\";\n"
+                                + " onto:description \"" + Job.description + "\";\n"
+                                + " onto:in_uni <" + Job.uni + ">\n"
+                            + ".}";
+                
+                Console("Abruf aller unis von DBPedia", query);
               
                $.ajax({
                 url: "http://" + Apiuser + ":" + ApiPassword + "@localhost:8080/fuseki/ds/update",
                 method: "POST",
-                data: data,
+                data: {update: query},
                 xhrFields: {
                     withCredentials: true
                 },
@@ -74,7 +112,10 @@ function GetAllUnis(CallBackFn){
                 "  { ?uni rdf:type onto:University .\n" +
                 "    ?uni prop:country dbres:Germany.\n" +
                 "    ?uni prop:name ?name. \n" +
+                "    FILTER(langMatches(lang(?name), \"EN\")) \n" +
                 "  }\n";
+        
+        Console("Abruf aller Unis von DBPedia", query);
         
         var url = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=" + escape(query) + "&format=json";
    
@@ -89,24 +130,34 @@ function GetAllUnis(CallBackFn){
 }
 
 function GetJobs(CallBackFn){
-    var data = {query: "SELECT ?subject ?predicate ?object WHERE {?subject ?predicate ?object} LIMIT 25"};
+    var query = "PREFIX dc: <http://leemia.de/> \n" +
+                "PREFIX  onto: <http://localhost:8080/unijobs/public/ontology.rdf#> \n" +
+                "PREFIX dbonto: <http://dbpedia.org/ontology/> \n" +
+                "PREFIX dbres: <http://dbpedia.org/resource/> \n" +
+                "PREFIX dbprop: <http://dbpedia.org/property/> \n" +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
+                "select ?job ?uni ?city ?jobtitle ?uniname ?cityname \n" +
+                "WHERE { ?job  rdf:type onto:job; \n" +
+                "   onto:in_uni ?uni; \n" +
+                "   onto:title ?jobtitle. \n" +
+                "   SERVICE <http://dbpedia.org/sparql/> { ?uni dbonto:city ?city. \n" +
+                "               ?uni dbprop:name ?uniname. \n" +
+                "               ?city rdfs:label ?cityname \n" +
+                "   }. \n" +
+                " FILTER(langMatches(lang(?cityname), \"EN\")). \n" +
+                " FILTER(langMatches(lang(?uniname), \"EN\")) \n" +
+                "}";
+        
+        Console("Abruf aller Jobs", query);
               
                $.ajax({
                 url: "http://localhost:8080/fuseki/ds/query",
                 method: "POST",
-                data: data,
-                success: function(res){console.log(res.results.bindings); 
+                data: {query: query},
+                success: function(res){
                     CallBackFn(res.results.bindings);  
             },
                 error: function(res){console.log(res);}
               });
 }
-
-/*EXMLPE Join Query*/
-//PREFIX dc: <http://leemia.de/> 
-//PREFIX dbres: <http://dbpedia.org/resource/>
-//PREFIX  onto: <http://dbpedia.org/ontology/>
-//select ?u ?s
-//WHERE { dc:test  dc:uni ?u .
-//SERVICE <http://dbpedia.org/sparql/> { ?u onto:city ?s.} 
-//}
