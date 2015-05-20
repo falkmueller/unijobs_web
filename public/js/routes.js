@@ -12,6 +12,10 @@ app.config(function($routeProvider) {
         templateUrl: 'templates/info.html',
         controller: 'InfoController'
       }).
+     when('/details/:uid', {
+        templateUrl: 'templates/detail.html',
+        controller: 'DetailController'
+      }).
      otherwise({
         redirectTo: '/start'
       });

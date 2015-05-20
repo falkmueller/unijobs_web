@@ -8,7 +8,7 @@
         <div class="col-sm-4">Stadt</div>
     </div>
     <div class="row" ng-repeat="obj in items">
-        <div class="col-sm-4">{{obj.jobtitle.value}}</div>
+        <div class="col-sm-4"><a href="#/details/{{obj.uid.value}}">{{obj.jobtitle.value}}</a></div>
         <div class="col-sm-4">{{obj.uniname.value}}</div>
         <div class="col-sm-4">{{obj.cityname.value}}</div>
       <!--{{obj.job.value}}-->

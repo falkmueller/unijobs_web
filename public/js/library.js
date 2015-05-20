@@ -80,6 +80,7 @@ function AddJob(Apiuser, ApiPassword, Job){
                           + " INSERT DATA { dc:Job_" + jobId + "\n"    
 				+ " rdf:type onto:job;\n"
                                 + " onto:title \"" + Job.title + "\";\n"
+                                + " onto:uid \"" + jobId + "\";\n"
                                 + " onto:description \"" + Job.description + "\";\n"
                                 + " onto:in_uni <" + Job.uni + ">\n"
                             + ".}";
@@ -114,7 +115,8 @@ function GetAllUnis(CallBackFn){
                 "    ?uni prop:country dbres:Germany.\n" +
                 "    ?uni prop:name ?name. \n" +
                 "    FILTER(langMatches(lang(?name), \"EN\")) \n" +
-                "  }\n";
+                "  }\n" + 
+                " ORDER BY ?name";
         
         Console("Abruf aller Unis von DBPedia", query);
         
@@ -139,10 +141,11 @@ function GetJobs(CallBackFn){
                 "PREFIX dbprop: <http://dbpedia.org/property/> \n" +
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
-                "select ?job ?uni ?city ?jobtitle ?uniname ?cityname \n" +
+                "select ?job ?uni ?city ?uid ?jobtitle ?uniname ?cityname \n" +
                 "WHERE { ?job  rdf:type onto:job; \n" +
                 "   onto:in_uni ?uni; \n" +
-                "   onto:title ?jobtitle. \n" +
+                "   onto:title ?jobtitle; \n" +
+                "   onto:uid ?uid. \n" +
                 "   SERVICE <http://dbpedia.org/sparql/> { ?uni dbonto:city ?city. \n" +
                 "               ?uni dbprop:name ?uniname. \n" +
                 "               ?city rdfs:label ?cityname \n" +
@@ -159,6 +162,48 @@ function GetJobs(CallBackFn){
                 data: {query: query},
                 success: function(res){
                     CallBackFn(res.results.bindings);  
+            },
+                error: function(res){console.log(res);}
+              });
+}
+
+function GetJobDetails(uid, CallBackFn){
+    var query = "PREFIX dc: <http://tomcat.falk-m.de/> \n" +
+                "PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#> \n" +
+                "PREFIX dbonto: <http://dbpedia.org/ontology/> \n" +
+                "PREFIX dbres: <http://dbpedia.org/resource/> \n" +
+                "PREFIX dbprop: <http://dbpedia.org/property/> \n" +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
+                "PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n" +
+                "PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> \n" +
+                "select * \n" +
+                "WHERE { ?job  rdf:type onto:job; \n" +
+                "   onto:uid \"" + uid + "\"; \n" +
+                "   onto:in_uni ?uni; \n" +
+                "   onto:title ?jobtitle; \n" +
+                "   onto:description ?jobdescription; \n" +
+                "   onto:uid ?uid. \n" +
+                "   SERVICE <http://dbpedia.org/sparql/> { ?uni dbonto:city ?city; \n" +
+                "                       dbprop:name ?uniname; \n" +
+                "                       dbprop:website ?uniwebsite; \n" +
+                "                       foaf:depiction ?unilogo; \n" +
+                "                       geo:lat ?unilat; \n" +
+                "                       geo:long ?unilong. \n" +
+                "               ?city rdfs:label ?cityname \n" +
+                "   }. \n" +
+                " FILTER(langMatches(lang(?cityname), \"EN\")). \n" +
+                " FILTER(langMatches(lang(?uniname), \"EN\")) \n" +
+                "}";
+        
+        Console("Abruf von Job: " + uid, query);
+              
+               $.ajax({
+                url: "/fuseki/ds/query",
+                method: "POST",
+                data: {query: query},
+                success: function(res){
+                    CallBackFn(res.results.bindings[0]);  
             },
                 error: function(res){console.log(res);}
               });

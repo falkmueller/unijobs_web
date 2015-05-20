@@ -45,6 +45,13 @@
             <rdfs:domain rdf:resource="#job" />
             <rdfs:range rdf:resource= "xsd#string" />
         </owl:DatatypeProperty>
+
+        <owl:DatatypeProperty rdf:ID="uid" >
+                <rdfs:label>uid</rdfs:label>
+                <rdfs:comment>identifier</rdfs:comment>
+            <rdfs:domain rdf:resource="#job" />
+            <rdfs:range rdf:resource= "xsd#string" />
+        </owl:DatatypeProperty>
 </rdf:RDF>
 
 
