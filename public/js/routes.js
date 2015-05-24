@@ -1,22 +1,25 @@
-app.config(function($routeProvider) {
+define(['app'], function (app) {
+    'use strict';
+    return app.config(function($routeProvider) {
     $routeProvider.
       when('/start', {
         templateUrl: 'templates/start.html',
-        controller: 'StartController'
+        controller: 'startController'
       }).
       when('/add', {
         templateUrl: 'templates/add.html',
-        controller: 'AddController'
+        controller: 'addController'
       }).
      when('/info', {
         templateUrl: 'templates/info.html',
-        controller: 'InfoController'
+        controller: 'infoController'
       }).
      when('/details/:uid', {
         templateUrl: 'templates/detail.html',
-        controller: 'DetailController'
+        controller: 'detailController'
       }).
      otherwise({
         redirectTo: '/start'
       });
   });
+});

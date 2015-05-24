@@ -99,11 +99,13 @@ function AddJob(Apiuser, ApiPassword, Job){
                 },
                 error: function(res){
                     AddMessage('AddJob','Es ist ein Fehler aufgetreten','danger');
-                    console.log(res);}
+                    Console("Fehler bei AddJob", "StatusCode: " + res.status + "; StatusText: " + res.statusText + "\n" + res.responseText);
+                }
               });
 }
 
 function GetAllUnis(CallBackFn){
+    
     var query = "PREFIX  onto: <http://dbpedia.org/ontology/>\n" +
                 "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
                 "PREFIX dbres: <http://dbpedia.org/resource/>\n" +
@@ -129,7 +131,10 @@ function GetAllUnis(CallBackFn){
                 success: function(res){
                     CallBackFn(res.results.bindings);
             },
-                error: function(res){console.log(res);}
+                error: function(res){
+                    AddMessage('AddJob','Es ist ein Fehler aufgetreten','danger');
+                    Console("Fehler bei GetAllUnis", "StatusCode: " + res.status + "; StatusText: " + res.statusText + "\n" + res.responseText);
+                }
               });
 }
 
@@ -163,7 +168,10 @@ function GetJobs(CallBackFn){
                 success: function(res){
                     CallBackFn(res.results.bindings);  
             },
-                error: function(res){console.log(res);}
+                error: function(res){
+                    AddMessage('AddJob','Es ist ein Fehler aufgetreten','danger');
+                    Console("Fehler bei getJobs", "StatusCode: " + res.status + "; StatusText: " + res.statusText + "\n" + res.responseText);
+                    }
               });
 }
 
@@ -205,6 +213,9 @@ function GetJobDetails(uid, CallBackFn){
                 success: function(res){
                     CallBackFn(res.results.bindings[0]);  
             },
-                error: function(res){console.log(res);}
+                error: function(res){
+                    AddMessage('AddJob','Es ist ein Fehler aufgetreten','danger');
+                    Console("Fehler bei GetJobDetails", "StatusCode: " + res.status + "; StatusText: " + res.statusText + "\n" + res.responseText);
+                }
               });
 }
