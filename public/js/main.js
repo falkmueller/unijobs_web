@@ -36,6 +36,10 @@ require(
     ],
     function () {
         angular.bootstrap(document, ['app']);
-        initialize();
+        require(['vendor/domReady!'], function (document) {
+            initialize();
+            require(['vendor/bootstrap.min']);
+        });
+        
     });
 

@@ -4,7 +4,6 @@
     
     define([
     'angular',
-    'vendor/bootstrap.min',
     'controllers/index',
     'vendor/angular-route',
     'vendor/angular-animate',
