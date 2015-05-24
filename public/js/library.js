@@ -47,11 +47,11 @@ function Console(headline, Message){
 /*****************************************
  * init
  * ****************************************/
-$(document).ready(function(){
+function initialize(){
     $("#toggle_console").click(function(){
         toggle_console();
     });
-});
+}
 
 function toggle_console(){
     if ($("#console").is(":visible")){

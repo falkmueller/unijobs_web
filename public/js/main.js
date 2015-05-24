@@ -37,4 +37,8 @@ define([
     'routes'
 ], function () {
     'use strict';
+    
+    require(['vendor/domReady!', 'library'], function () {
+        initialize();
+    });
 });
