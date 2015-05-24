@@ -22,23 +22,20 @@ requirejs.config({
           exports: 'angular'
         }
   }
-
+  
 });
 
-/**
- * bootstraps angular onto the window.document node
- */
-define([
-    'require',
-    'angular',
-    'jquery',
-    'library',
-    'app',
-    'routes'
-], function () {
-    'use strict';
-    
-    require(['vendor/domReady!', 'library'], function () {
+require(
+    [
+       'require',
+        'angular',
+        'jquery',
+        'library',
+        'app',
+        'routes'
+    ],
+    function () {
+        angular.bootstrap(document, ['app']);
         initialize();
     });
-});
+
