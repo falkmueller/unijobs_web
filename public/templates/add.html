@@ -13,10 +13,20 @@
       </div>
         
       <div class="form-group">
-        <label for="uni">uni</label>
+        <label for="uni">Uni</label>
         <select class="form-control" id="uni" ng-model="Entity.uni">       
             <option ng-repeat="uni in unis" value="{{uni.uni.value}}">{{uni.name.value}}</option>
         </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="faculty">Fakultät</label>
+        <input type="text" class="form-control" id="faculty" placeholder="Fakultät" ng-model="Entity.faculty">
+      </div>
+        
+        <div class="form-group">
+        <label for="salaryscale">Gehaltsgruppe</label>
+        <input type="text" class="form-control" id="salaryscale" placeholder="Gehaltsgruppe" ng-model="Entity.salaryscale">
       </div>
 
         <div class="form-group">

@@ -52,6 +52,27 @@
             <rdfs:domain rdf:resource="#job" />
             <rdfs:range rdf:resource= "xsd#string" />
         </owl:DatatypeProperty>
+
+        <owl:DatatypeProperty rdf:ID="salaryscale" >
+                <rdfs:label>faculty</rdfs:label>
+                <rdfs:comment>faculty</rdfs:comment>
+            <rdfs:domain rdf:resource="#job" />
+            <rdfs:range rdf:resource= "xsd#string" />
+        </owl:DatatypeProperty>
+
+        <owl:DatatypeProperty rdf:ID="faculty" >
+                <rdfs:label>Gehaltsgruppe</rdfs:label>
+                <rdfs:comment>Gehaltsgruppe</rdfs:comment>
+            <rdfs:domain rdf:resource="#job" />
+            <rdfs:range rdf:resource= "xsd#string" />
+        </owl:DatatypeProperty>
+
+        <owl:DatatypeProperty rdf:ID="keywords" >
+                <rdfs:label>Keywords</rdfs:label>
+                <rdfs:comment>Keywords</rdfs:comment>
+            <rdfs:domain rdf:resource="#job" />
+            <rdfs:range rdf:resource= "xsd#string" />
+        </owl:DatatypeProperty>
 </rdf:RDF>
 
 
