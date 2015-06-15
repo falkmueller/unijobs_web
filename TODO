@@ -1,12 +1,5 @@
-Uni Jobseiten Crawlen:
-	- Crawler4j
-
-https://www.tu-chemnitz.de/tu/stellen.php
-https://www.uni-jena.de/Stellenmarkt.html
-http://www.zv.uni-leipzig.de/universitaet/stellen-und-ausbildung/stellenausschreibungen/nichtwissenschaftliches-personal.html
-http://www.zv.uni-leipzig.de/universitaet/stellen-und-ausbildung/stellenausschreibungen/wissenschaftliches-personal.html
-
 Babelfy zum Extrahieren der inhalte auf gecrawlten texten
+Inhalte in Dripel Store übernehmen
 
 resource.jsp Anzeige anpassen und in rdf die baseurl anpassen.
 

@@ -1,7 +1,9 @@
 <%@ page import="edu.uci.ics.crawler4j.crawler.CrawlConfig, edu.uci.ics.crawler4j.crawler.Page,
          edu.uci.ics.crawler4j.fetcher.PageFetchResult, edu.uci.ics.crawler4j.fetcher.PageFetcher,
          edu.uci.ics.crawler4j.parser.HtmlParseData, edu.uci.ics.crawler4j.parser.ParseData,
-         edu.uci.ics.crawler4j.parser.Parser, edu.uci.ics.crawler4j.url.WebURL" %>
+         edu.uci.ics.crawler4j.parser.Parser, edu.uci.ics.crawler4j.url.WebURL,
+         java.util.Set, java.util.Iterator, java.util.Date, java.util.HashSet,
+         java.io.FileWriter, java.io.IOException, org.json.simple.JSONValue, org.json.simple.JSONObject" %>
 
 <%
 
@@ -16,28 +18,22 @@ class Crawler {
     pageFetcher = new PageFetcher(config);
   }
 
-    public String processUrl(String url) {
-        String OutputString = "";
-        OutputString += url + "<br/>";
+    public ParseData processUrl(String url) {
         Page page = download(url);
         if (page != null) {
           ParseData parseData = page.getParseData();
           if (parseData != null) {
             if (parseData instanceof HtmlParseData) {
-              HtmlParseData htmlParseData = (HtmlParseData) parseData;
-              OutputString += "Title: " + htmlParseData.getTitle();
-              OutputString += "Text length: " + htmlParseData.getText().length();
-              OutputString += "Html length: " + htmlParseData.getHtml().length();
+              return parseData;
             }
           } else {
-            OutputString += "Couldn't parse the content of the page.<br/>";
+            //error
           }
         } else {
-          OutputString += "Couldn't fetch the content of the page.<br/>";
+          //error
         }
-        OutputString += "==============<br/>";
-
-        return OutputString;
+        
+        return null;
       }
 
 private Page download(String url) {

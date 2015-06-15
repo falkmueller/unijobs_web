@@ -3,6 +3,7 @@ composer.phar
 composer.lock
 # Untracked folder:
 vendor
+data
 public/js/vendor
 public/css/bootstrap*
 public/fonts/glyphicons*
