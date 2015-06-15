@@ -1,5 +1,3 @@
-Filter nach Bundesland nicht möglich, da manche Unis Bundesland
-
 Uni Jobseiten Crawlen:
 	- Crawler4j
 
@@ -9,5 +7,7 @@ http://www.zv.uni-leipzig.de/universitaet/stellen-und-ausbildung/stellenausschre
 http://www.zv.uni-leipzig.de/universitaet/stellen-und-ausbildung/stellenausschreibungen/wissenschaftliches-personal.html
 
 Babelfy zum Extrahieren der inhalte auf gecrawlten texten
+
+resource.jsp Anzeige anpassen und in rdf die baseurl anpassen.
 
 Optional: wie bei relfinder graph virtualisieren  
