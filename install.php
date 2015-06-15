@@ -5,6 +5,7 @@ FileSystem::makeDir("public/css");
 FileSystem::makeDir("public/fonts");
 FileSystem::makeDir("public/js");
 FileSystem::makeDir("public/js/vendor");
+FileSystem::makeDir("data");
 
 FileSystem::copy(__dir__."/vendor/twitter/bootstrap/css", __dir__."/public/css");
 FileSystem::copy(__dir__."/vendor/twitter/bootstrap/fonts", __dir__."/public/fonts");
