@@ -3,9 +3,7 @@
          edu.uci.ics.crawler4j.parser.HtmlParseData, edu.uci.ics.crawler4j.parser.ParseData,
          edu.uci.ics.crawler4j.parser.Parser, edu.uci.ics.crawler4j.url.WebURL,
          java.util.Set, java.util.Iterator, java.util.Date, java.util.HashSet,
-         java.io.FileWriter, java.io.IOException, org.json.simple.JSONValue, org.json.simple.JSONObject" %>
-
-<%
+         java.io.FileWriter, java.io.IOException, org.json.simple.JSONValue, org.json.simple.JSONObject" %><%
 
 class Crawler {
 

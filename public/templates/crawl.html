@@ -1,0 +1,32 @@
+<view-title>Crawler</view-title>
+
+<div class="form-group">
+        <label for="WsPw">Webservice Passwort</label>
+        <input type="password" class="form-control" id="WsPw" placeholder="Webservice Passwort" ng-model="WsPw">
+      </div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">1. Inhalte Crawlen</div>  
+  <div class="panel-body">   
+      <div>
+          <a ng-click="Crawl(WsPw)" class="btn btn-default">Seiten crawlen</a>
+      </div>
+      
+      <div class="ajax-loader" style="display: none;" id="divWaitCrawl"></div>
+      
+      <div ng-if="crawledSites" class="table">
+            <div class="row header">
+                <div class="col-sm-4">Uni</div>
+                <div class="col-sm-4">Url</div>
+                <div class="col-sm-4">Seiten</div>
+            </div>
+            <div class="row" ng-repeat="obj in crawledSites">
+                <div class="col-sm-4">{{obj.uni}}</div>
+                <div class="col-sm-7">{{obj.url}}</div>
+                <div class="col-sm-1">{{obj.count}}</div>
+              <!--{{obj.job.value}}-->
+            </div>
+        </div>
+      
+  </div>
+</div>

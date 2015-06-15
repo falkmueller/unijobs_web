@@ -40,8 +40,14 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="#/start" active-link="active"><span class="glyphicon glyphicon-home"></span> Start</a></li>
-        <li><a href="#/add" active-link="active"><span class="glyphicon glyphicon-plus"></span> hinzufügen</a></li>
         <li><a href="#/info" active-link="active"><span class="glyphicon glyphicon-info-sign"></span> Info</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-plus"></span> hinzufügen <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#/add" active-link="active"><span class="glyphicon glyphicon-plus"></span> Eingabe</a></li>
+            <li><a href="#/crawl" active-link="active"><span class="glyphicon glyphicon-cloud"></span> Crawler</a></li>
+          </ul>
+        </li>
       </ul>
       <form class="navbar-form navbar-right" role="search">
         <div class="form-group">

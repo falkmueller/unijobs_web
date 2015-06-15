@@ -55,6 +55,11 @@
     text-transform: uppercase;}
 .table .row {border-bottom: 1px solid #ddd;}
 
+/* Crawl
+============================================================================= */
+.ajax-loader { min-height: 20px; background-image: url(../images/ajax-loader.gif);
+                background-repeat: no-repeat; background-position: center 0;}
+
 /* ANIMATIONS
 ============================================================================= */
 

@@ -10,6 +10,10 @@ define(['app'], function (app) {
         templateUrl: 'templates/add.html',
         controller: 'addController'
       }).
+      when('/crawl', {
+        templateUrl: 'templates/crawl.html',
+        controller: 'crawlController'
+      }).
      when('/info', {
         templateUrl: 'templates/info.html',
         controller: 'infoController'
