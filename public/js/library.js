@@ -113,14 +113,24 @@ function GetAllUnis(CallBackFn){
                 "PREFIX dbres: <http://dbpedia.org/resource/>\n" +
                 "PREFIX prop: <http://dbpedia.org/property/>\n" + 
                 "\n" +
-                "SELECT ?uni ?name \n" +
+                "SELECT ?uni ?name (group_concat(distinct ?city_name; separator = \", \") AS ?CITY) (group_concat(distinct ?state_name ; separator = \", \") AS ?STATE) \n" +
                 "WHERE\n" +
                 "  { ?uni rdf:type onto:University .\n" +
                 "    ?uni prop:country dbres:Germany.\n" +
                 "    ?uni prop:name ?name. \n" +
-                "    FILTER(langMatches(lang(?name), \"EN\")) \n" +
+                "    OPTIONAL { \n" +
+                "       ?uni onto:city ?city.  \n" +
+                "       ?city rdfs:label ?city_name. \n" +
+                "       OPTIONAL { \n" +
+                "           ?city prop:bundesland ?state_name. \n" +
+                "           FILTER(langMatches(lang(?state_name), \"EN\")) \n" +
+                "       } \n" +
+                "       FILTER(langMatches(lang(?city_name), \"en\")) \n" +
+                "     } \n" +
+                "     FILTER(langMatches(lang(?name), \"en\"))\n" +
                 "  }\n" + 
-                " ORDER BY ?name";
+                " GROUP BY ?uni ?name \n" +
+                " ORDER BY ?STATE ?CITY ?name";
         
         Console("Abruf aller Unis von DBPedia", query);
         
@@ -201,6 +211,7 @@ function GetJobDetails(uid, CallBackFn){
                 "                       OPTIONAL{?uni foaf:depiction ?unilogo}. \n" +
                 "                       OPTIONAL{?uni geo:lat ?unilat}. \n" +
                 "                       OPTIONAL{?uni geo:long ?unilong} \n" +
+                "                       OPTIONAL{?city dbprop:bundesland ?state. FILTER(langMatches(lang(?state), \"EN\"))} \n" +
                 "   }. \n" +
                 " FILTER(langMatches(lang(?cityname), \"EN\")). \n" +
                 " FILTER(langMatches(lang(?uniname), \"EN\")) \n" +
