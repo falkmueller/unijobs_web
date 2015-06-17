@@ -23,8 +23,10 @@ class uniparser {
 
         File folder = new File(this.dataPath);
         File[] listOfFiles = folder.listFiles();
-
-        for (int i = 0; i < 10; i++) {//listOfFiles.length
+        
+        int InsertMax = listOfFiles.length;
+        if (InsertMax > 10){InsertMax = 10;}
+        for (int i = 0; i < InsertMax; i++) {
           if (listOfFiles[i].isFile()) {
             String FileContent = "";
 
@@ -34,9 +36,10 @@ class uniparser {
             JSONObject obj2=(JSONObject)obj;
 
             ReturnValue += " ---- " + this.addJob(obj2);
-            
+            Files.delete(Paths.get(this.dataPath + listOfFiles[i].getName()));
+
             } catch (IOException e) {
-                 ReturnValue += " IOException:" + e.getMessage();
+                 ReturnValue += " IOException:" + listOfFiles[i].getName() + " " + e.getMessage();
                e.printStackTrace();
            } catch (Exception e){
                 ReturnValue += " FEHLER";
@@ -62,7 +65,9 @@ class uniparser {
     }
 
     private String addJob(JSONObject JobParseData) throws MalformedURLException, UnsupportedEncodingException, IOException{
-        String userPassword = "test" + ":" + "test";
+        
+        settings Settings = new settings();
+        String userPassword = Settings.Fuseki_User + ":" + Settings.Fuseki_Passwort;
         String JobId = this.BuildJobId((String)JobParseData.get("Uni"), (String)JobParseData.get("Url"));
 
         String SparQLQuery = "PREFIX dc: <http://tomcat.falk-m.de/> \n"
@@ -87,6 +92,7 @@ class uniparser {
         String ReturnValue = "";
     
         String body = "update=" + URLEncoder.encode( SparQLQuery, "UTF-8" );
+    
 
         HttpURLConnection connection = (HttpURLConnection) this.FusekiUpdateUrl.openConnection();
         connection.setRequestProperty("Authorization", "Basic " + new sun.misc.BASE64Encoder().encode(userPassword.getBytes()));
@@ -95,7 +101,7 @@ class uniparser {
         connection.setDoOutput( true );
         connection.setUseCaches( false );
         connection.setRequestProperty( "Content-Type",
-                                       "application/x-www-form-urlencoded" );
+                                       "application/x-www-form-urlencoded; charset=UTF-8" );
         connection.setRequestProperty( "Content-Length", String.valueOf(body.length()) );
 
         OutputStreamWriter writer = new OutputStreamWriter( connection.getOutputStream() );

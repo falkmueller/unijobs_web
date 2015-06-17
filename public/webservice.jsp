@@ -1,4 +1,5 @@
 <%@ page import="org.json.simple.JSONValue, org.json.simple.JSONObject, org.json.simple.JSONArray" 
+%><%@include file="../settings.jsp"
 %><%@include file="../private/unicrawler.jsp"
 %><%@include file="../private/uniparser.jsp"
 %><%
@@ -16,8 +17,9 @@ class webservice {
     private JSONObject crawl(){
         JSONObject responseData = new JSONObject();
         JSONArray ResponseArray = new JSONArray();
-
-        if (request.getParameter("WsPw") == null || !request.getParameter("WsPw").toString().equals("test")){
+        
+        settings Settings = new settings();
+        if (request.getParameter("WsPw") == null || !request.getParameter("WsPw").toString().equals(Settings.Webservide_Passwort)){
             responseData.put("message","Das Passwort ist falsch");
             responseData.put("success", false);
             return responseData;
@@ -53,7 +55,9 @@ class webservice {
 
     private JSONObject parse(){
         JSONObject responseData = new JSONObject();
-        if (request.getParameter("WsPw") == null || !request.getParameter("WsPw").toString().equals("test")){
+
+        settings Settings = new settings();
+        if (request.getParameter("WsPw") == null || !request.getParameter("WsPw").toString().equals(Settings.Webservide_Passwort)){
             responseData.put("message","Das Passwort ist falsch");
             responseData.put("success", false);
             return responseData;

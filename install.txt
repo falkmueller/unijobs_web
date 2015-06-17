@@ -1,5 +1,6 @@
 Webanwendung:
     - composer ausführen
+    - settings.jsp.template in settings.jsp umbenennen und darin die Einstellungen setzen
 
 
 fuseki Webbapp:
