@@ -84,8 +84,9 @@ function AddJob(Apiuser, ApiPassword, Job){
                                 + " onto:description \"" + Job.description + "\";\n"
                                 + " onto:in_uni <" + Job.uni + ">;\n"
                                 + " onto:faculty \"" + Job.faculty + "\";\n"
-                                + " onto:salaryscale \"" + Job.salaryscale + "\"\n"
-                            + ".}";
+                                + " onto:salaryscale \"" + Job.salaryscale + "\";\n"
+                                + "onto:ismanual true. \n"
+                            + "}";
                 
                 Console("Abruf aller unis von DBPedia", query);
               
@@ -169,7 +170,9 @@ function GetJobs(CallBackFn){
                 "   }. \n" +
                 " FILTER(langMatches(lang(?cityname), \"EN\")). \n" +
                 " FILTER(langMatches(lang(?uniname), \"EN\")) \n" +
-                "}";
+                "}" + 
+                "LIMIT   10" +
+                "OFFSET  0";
         
         Console("Abruf aller Jobs", query);
               
@@ -205,8 +208,8 @@ function GetJobDetails(uid, CallBackFn){
                 "   onto:description ?jobdescription; \n" +
                 "   onto:uid ?uid. \n" +
                 "   SERVICE <http://dbpedia.org/sparql/> { ?uni dbonto:city ?city; \n" +
-                "                       dbprop:name ?uniname; \n" +
-                "                       dbprop:website ?uniwebsite. \n" +
+                "                       dbprop:name ?uniname. \n" +
+                "                       OPTIONAL{ ?uni dbprop:website ?uniwebsite}. \n" +
                 "                       ?city rdfs:label ?cityname. \n" +
                 "                       OPTIONAL{?uni foaf:depiction ?unilogo}. \n" +
                 "                       OPTIONAL{?uni geo:lat ?unilat}. \n" +

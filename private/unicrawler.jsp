@@ -1,4 +1,5 @@
-<%@include file="crawler.jsp"%><%
+<%@ page import="org.json.simple.JSONValue, org.json.simple.JSONObject, org.json.simple.JSONArray, java.text.SimpleDateFormat" 
+%><%@include file="crawler.jsp"%><%
 
 class unicrawler {
 
@@ -48,8 +49,8 @@ class unicrawler {
             pageData.put("Content",htmlParseData.getHtml());
             pageData.put("Url",url);
             pageData.put("Uni",Uni);
-            pageData.put("Date",new Date());
-
+            //pageData.put("Date",new Date());
+            pageData.put("Date",new SimpleDateFormat("yyyy-MM-dd").format(new Date())); //new SimpleDateFormat("yyyy-MM-dd").format(date);
             String json = JSONValue.toJSONString(pageData);
             try {
                //write converted json data to a file named "file.json"

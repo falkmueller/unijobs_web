@@ -1,6 +1,8 @@
 Babelfy zum Extrahieren der inhalte auf gecrawlten texten
 Inhalte in Dripel Store übernehmen
 
-resource.jsp Anzeige anpassen und in rdf die baseurl anpassen.
+Paging und Filterung
+
+resource.jsp Anzeige anpassen (html und rdf Sicht) und in rdf die baseurl anpassen.
 
 Optional: wie bei relfinder graph virtualisieren  

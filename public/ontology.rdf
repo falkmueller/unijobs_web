@@ -17,6 +17,13 @@
 		<rdfs:comment>The class of a uni job.</rdfs:comment>
 	</owl:Class>
 
+ <owl:DatatypeProperty rdf:ID="url">
+                <rdfs:label>url</rdfs:label>
+                <rdfs:comment>url</rdfs:comment>
+            <rdfs:domain rdf:resource="#job" />
+            <rdfs:range rdf:resource="xsd#string" />
+        </owl:DatatypeProperty>
+
 <owl:ObjectProperty rdf:ID="in_uni" rdf:type="owl#ObjectProperty">
                 <rdfs:label>in Uni</rdfs:label>
                 <rdfs:comment>Relation between Job ans Uni.</rdfs:comment>
@@ -51,6 +58,13 @@
                 <rdfs:comment>identifier</rdfs:comment>
             <rdfs:domain rdf:resource="#job" />
             <rdfs:range rdf:resource= "xsd#string" />
+        </owl:DatatypeProperty>
+
+        <owl:DatatypeProperty rdf:ID="ismanual" >
+                <rdfs:label>ismanual</rdfs:label>
+                <rdfs:comment>is manuel added</rdfs:comment>
+            <rdfs:domain rdf:resource="#job" />
+            <rdfs:range rdf:resource= "xsd#boolean" />
         </owl:DatatypeProperty>
 
         <owl:DatatypeProperty rdf:ID="salaryscale" >

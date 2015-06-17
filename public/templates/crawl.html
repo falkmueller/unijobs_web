@@ -17,8 +17,8 @@
       <div ng-if="crawledSites" class="table">
             <div class="row header">
                 <div class="col-sm-4">Uni</div>
-                <div class="col-sm-4">Url</div>
-                <div class="col-sm-4">Seiten</div>
+                <div class="col-sm-7">Url</div>
+                <div class="col-sm-1">Seiten</div>
             </div>
             <div class="row" ng-repeat="obj in crawledSites">
                 <div class="col-sm-4">{{obj.uni}}</div>
@@ -28,5 +28,16 @@
             </div>
         </div>
       
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">2. Inhalte Parsen</div>  
+  <div class="panel-body"> 
+      <div>
+          <a ng-click="Parse(WsPw)" class="btn btn-default">Inhalte parsen</a>
+      </div>
+      
+      <div class="ajax-loader" style="display: none;" id="divWaitParse"></div>
   </div>
 </div>
