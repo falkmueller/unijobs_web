@@ -151,7 +151,7 @@ function GetAllUnis(CallBackFn){
               });
 }
 
-function GetJobs(CallBackFn){
+function GetJobs(cFrom, cPP, CallBackFn){
     var query = "PREFIX dc: <http://tomcat.falk-m.de/> \n" +
                 "PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#> \n" +
                 "PREFIX dbonto: <http://dbpedia.org/ontology/> \n" +
@@ -171,8 +171,8 @@ function GetJobs(CallBackFn){
                 " FILTER(langMatches(lang(?cityname), \"EN\")). \n" +
                 " FILTER(langMatches(lang(?uniname), \"EN\")) \n" +
                 "}" + 
-                "LIMIT   10" +
-                "OFFSET  0";
+                "LIMIT   " + cPP +
+                "OFFSET  " + cFrom;
         
         Console("Abruf aller Jobs", query);
               

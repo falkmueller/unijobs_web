@@ -2,16 +2,21 @@
     "use strict";
     define(["common/controllers"],function(controllers){
         controllers.controller('startController', function($scope, $http){
-
-            var data = {query: "SELECT ?subject ?predicate ?object WHERE {?subject ?predicate ?object} LIMIT 25"};
-
-                      //$scope.items = [1,2,3];
-
-                      GetJobs(function(res){
-                          $scope.$apply(function () {
-                                $scope.items = res;
-                             });
-                      });
+            
+            $scope.from = 0;
+            $scope.pp = 10;
+            
+            $scope.loadmore = function(op){
+                $scope.from = $scope.from + ($scope.pp*op);
+                if ($scope.from < 0){$scope.from = 0;} 
+                GetJobs($scope.from, $scope.pp, function(res){
+                $scope.$apply(function () {
+                      $scope.items = res;
+                   });
+                });
+            };
+            
+            $scope.loadmore(0);
 
         });
     });
