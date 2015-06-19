@@ -1,7 +1,8 @@
 <%@ page import="org.json.simple.JSONValue, org.json.simple.JSONObject, org.json.simple.JSONArray,
          java.nio.file.Files, java.nio.file.Paths,
          java.net.*, java.io.*, java.security.*, java.math.BigInteger, java.util.UUID,
-         org.jsoup.Jsoup, org.jsoup.nodes.Document, org.jsoup.nodes.Element, org.jsoup.select.Elements" 
+         org.jsoup.Jsoup, org.jsoup.nodes.Document, org.jsoup.nodes.Element, org.jsoup.select.Elements,
+         java.util.regex.Pattern, java.util.regex.Matcher" 
 %><%
 
 class uniparser {
@@ -43,7 +44,7 @@ class uniparser {
                  ReturnValue += " IOException:" + listOfFiles[i].getName() + " " + e.toString();
                e.printStackTrace();
            } catch (Exception e){
-                ReturnValue += " FEHLER";
+                ReturnValue += e.toString();
             }
           } 
         }
@@ -148,11 +149,30 @@ class uniparser {
             htmlContent = JobContent.first().html();
         }
 
-            this.addJob(Uni, (String)JobParseData.get("Url"), JobTitle, htmlContent, "", "");
+            this.addJob(Uni, (String)JobParseData.get("Url"), JobTitle, htmlContent, "", "" + ExtractSalaryscale(htmlContent));
 
         return "";
     }
 
+    private int ExtractSalaryscale(String extText){
+        int ReturnValue = 0;
+
+        Pattern p = Pattern.compile("(Entgeltgruppe) (\\d+)|(\\d+) (TV-L)");
+        Matcher m = p.matcher(extText);
+        if (m.find()) {
+            if (m.group(2) == null){
+                ReturnValue = Integer.valueOf(m.group(3));
+            } else {
+                ReturnValue = Integer.valueOf(m.group(2));
+            }
+          
+        } 
+
+        return ReturnValue;
+    }
+
 }
+
+
 
 %>

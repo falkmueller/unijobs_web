@@ -5,12 +5,14 @@
     <div class="row header">
         <div class="col-sm-4">Job Bezeichnung</div>
         <div class="col-sm-4">Universität</div>
-        <div class="col-sm-4">Stadt</div>
+        <div class="col-sm-3">Stadt</div>
+        <div class="col-sm-1">TV-L</div>
     </div>
     <div class="row" ng-repeat="obj in items">
         <div class="col-sm-4"><a href="#/details/{{obj.uid.value}}">{{obj.jobtitle.value}}</a></div>
         <div class="col-sm-4">{{obj.uniname.value}}</div>
-        <div class="col-sm-4">{{obj.cityname.value}}</div>
+        <div class="col-sm-3">{{obj.cityname.value}}</div>
+        <div class="col-sm-1">{{obj.salaryscale.value}}</div>
       <!--{{obj.job.value}}-->
     </div>
 </div>

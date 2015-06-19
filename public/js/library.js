@@ -159,10 +159,11 @@ function GetJobs(cFrom, cPP, CallBackFn){
                 "PREFIX dbprop: <http://dbpedia.org/property/> \n" +
                 "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
-                "select ?job ?uni ?city ?uid ?jobtitle ?uniname ?cityname \n" +
+                "select ?job ?uni ?city ?uid ?jobtitle ?uniname ?cityname ?salaryscale \n" +
                 "WHERE { ?job  rdf:type onto:job; \n" +
                 "   onto:in_uni ?uni; \n" +
-                "   onto:title ?jobtitle; \n" +
+                "   onto:title ?jobtitle;  \n" +
+                "   onto:salaryscale ?salaryscale; \n" +
                 "   onto:uid ?uid. \n" +
                 "   SERVICE <http://dbpedia.org/sparql/> { ?uni dbonto:city ?city. \n" +
                 "               ?uni dbprop:name ?uniname. \n" +
