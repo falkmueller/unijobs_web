@@ -49,7 +49,7 @@ class uniparser {
           } 
         }
 
-        return ReturnValue;
+        return ReturnValue + this.FusekiUpdateUrl;
     }
 
     private String BuildJobId(String Uni, String Url){
@@ -156,7 +156,7 @@ class uniparser {
 
     private int ExtractSalaryscale(String extText){
         int ReturnValue = 0;
-
+        
         Pattern p = Pattern.compile("(Entgeltgruppe) (\\d+)|(\\d+) (TV-L)");
         Matcher m = p.matcher(extText);
         if (m.find()) {
