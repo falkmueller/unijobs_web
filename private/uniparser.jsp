@@ -1,6 +1,7 @@
 <%@ page import="org.json.simple.JSONValue, org.json.simple.JSONObject, org.json.simple.JSONArray,
          java.nio.file.Files, java.nio.file.Paths,
-         java.net.*, java.io.*, java.security.*, java.math.BigInteger, java.util.UUID" 
+         java.net.*, java.io.*, java.security.*, java.math.BigInteger, java.util.UUID,
+         org.jsoup.Jsoup, org.jsoup.nodes.Document, org.jsoup.nodes.Element, org.jsoup.select.Elements" 
 %><%
 
 class uniparser {
@@ -25,7 +26,7 @@ class uniparser {
         File[] listOfFiles = folder.listFiles();
         
         int InsertMax = listOfFiles.length;
-        if (InsertMax > 10){InsertMax = 10;}
+        if (InsertMax > 100){InsertMax = 100;}
         for (int i = 0; i < InsertMax; i++) {
           if (listOfFiles[i].isFile()) {
             String FileContent = "";
@@ -39,7 +40,7 @@ class uniparser {
             Files.delete(Paths.get(this.dataPath + listOfFiles[i].getName()));
 
             } catch (IOException e) {
-                 ReturnValue += " IOException:" + listOfFiles[i].getName() + " " + e.getMessage();
+                 ReturnValue += " IOException:" + listOfFiles[i].getName() + " " + e.toString();
                e.printStackTrace();
            } catch (Exception e){
                 ReturnValue += " FEHLER";
@@ -58,17 +59,21 @@ class uniparser {
             byte[] digest = m.digest();
             BigInteger bigInt = new BigInteger(1,digest);
             String hashtext = bigInt.toString(16);
-            return Uni + "_" + hashtext;
+            return Uni.replace(",", "") + "_" + hashtext;
          } catch (Exception e){
-            return Uni + "_" + UUID.randomUUID().toString();
+            return Uni.replace(",", "") + "_" + UUID.randomUUID().toString();
         }
     }
 
-    private String addJob(JSONObject JobParseData) throws MalformedURLException, UnsupportedEncodingException, IOException{
-        
+    private void addJob(String Uni, String Url, String Title, String Content, String faculty, String salaryscale) throws MalformedURLException, UnsupportedEncodingException, IOException {
+
         settings Settings = new settings();
         String userPassword = Settings.Fuseki_User + ":" + Settings.Fuseki_Passwort;
-        String JobId = this.BuildJobId((String)JobParseData.get("Uni"), (String)JobParseData.get("Url"));
+        String JobId = this.BuildJobId(Uni, Url);
+        
+        Content = Content.replace("\n", "").replace("\r", "");
+        Content = Content.replace("\"", "\\\"");
+        Title = Title.replace("\"", "\\\"");
 
         String SparQLQuery = "PREFIX dc: <http://tomcat.falk-m.de/> \n"
                           + " PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#>\n"
@@ -79,20 +84,17 @@ class uniparser {
                           + " WHERE  {FILTER (?s = dc:Job_" + JobId + ")} ;"
                           + " INSERT  DATA { dc:Job_" + JobId + " \n"    
 				+ " rdf:type onto:job;\n"
-                                + " onto:title \"" + JobParseData.get("Title") + "\";\n"
-                                + " onto:url \"" + JobParseData.get("Url") + "\";\n"
+                                + " onto:title \"" + Title + "\";\n"
+                                + " onto:url \"" + Url + "\";\n"
                                 + " onto:uid \"" + JobId + "\";\n"
-                                + " onto:description \"" + "Job.Description" + "\";\n"
-                                + " onto:in_uni <" + "http://dbpedia.org/resource/" + JobParseData.get("Uni") + ">;\n"
-                                + " onto:faculty \"" + "Job.faculty" + "\";\n"
-                                + " onto:salaryscale \"" + "Job.salaryscale" + "\";\n"
+                                + " onto:description \"" + Content + "\";\n"
+                                + " onto:in_uni <" + "http://dbpedia.org/resource/" + Uni + ">;\n"
+                                + " onto:faculty \"" + faculty + "\";\n"
+                                + " onto:salaryscale \"" + salaryscale + "\";\n"
                                 + "onto:ismanual false. \n"
                             + " }";
 
-        String ReturnValue = "";
-    
         String body = "update=" + URLEncoder.encode( SparQLQuery, "UTF-8" );
-    
 
         HttpURLConnection connection = (HttpURLConnection) this.FusekiUpdateUrl.openConnection();
         connection.setRequestProperty("Authorization", "Basic " + new sun.misc.BASE64Encoder().encode(userPassword.getBytes()));
@@ -118,9 +120,39 @@ class uniparser {
 
         writer.close();
         reader.close();
+    }
 
-        return ReturnValue;
+    private String addJob(JSONObject JobParseData) throws MalformedURLException, UnsupportedEncodingException, IOException{
+        
+        String Uni = (String)JobParseData.get("Uni");
+        String JobTitle = (String)JobParseData.get("Title");
+        String htmlContent = "";
+        Document doc = Jsoup.parse((String)JobParseData.get("Content"));
+        Elements JobContent;        
+
+        if (Uni.equals("University_of_Jena")){
+            JobContent = doc.select("#inhalt2");
+        } else if (Uni.equals("Chemnitz_University_of_Technology")) {
+             JobContent = doc.select(".page-content");
+             JobTitle = JobContent.first().select("H4").first().text();
+        } else if (Uni.equals("Hochschule_Mittweida")) {
+             JobContent = doc.select(".news-single-item");
+             JobTitle = doc.select("H1").first().text();
+        } else if (Uni.equals("Bauhaus_University,_Weimar")) {
+             JobContent = doc.select("#content_main");
+        } else {
+            JobContent = doc.select("body");
+        }
+
+        if (JobContent != null){
+            htmlContent = JobContent.first().html();
+        }
+
+            this.addJob(Uni, (String)JobParseData.get("Url"), JobTitle, htmlContent, "", "");
+
+        return "";
     }
 
 }
+
 %>

@@ -14,4 +14,7 @@
       <!--{{obj.job.value}}-->
     </div>
 </div>
+
+<div class="ajax-loader" ng-if="!items"></div>
+
 <a class="btn btn-info" ng-click="loadmore(-1)">zurück</a> {{from/pp+1}} Seite <a class="btn btn-info" ng-click="loadmore(1)">weitere</a>

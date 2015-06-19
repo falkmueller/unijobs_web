@@ -216,6 +216,7 @@ function GetJobDetails(uid, CallBackFn){
                 "                       OPTIONAL{?uni geo:long ?unilong} \n" +
                 "                       OPTIONAL{?city dbprop:bundesland ?state. FILTER(langMatches(lang(?state), \"EN\"))} \n" +
                 "   }. \n" +
+                "   OPTIONAL{?job onto:url ?url;}." +
                 " FILTER(langMatches(lang(?cityname), \"EN\")). \n" +
                 " FILTER(langMatches(lang(?uniname), \"EN\")) \n" +
                 "}";

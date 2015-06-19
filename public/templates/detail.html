@@ -9,7 +9,9 @@
                 <iframe ng-src="{{mapsrc}}" width="100%" height="300"></iframe>
             </div>
             
-            <p>{{uni.jobdescription.value}}</p>
+            <div ng-bind-html="DescHtml"></div>
+            
+            <a target="_blank" href="{{uni.url.value}}" class="btn btn-default">Zur Anzeige</a>
         </div>
         <div class="col-sm-3">
             <div ng-if="uni.unilogo">
@@ -17,7 +19,7 @@
             </div>
 
             Stadt: {{uni.cityname.value}}<br/>
-            Bundesland: {{uni.state.value}}<br/>
+            <span ng-if="uni.state">Bundesland: {{uni.state.value}}<br/></span>
             Uni: <a target="_blank" href="{{uni.uniwebsite.value}}">{{uni.uniname.value}}</a>
 
         </div>

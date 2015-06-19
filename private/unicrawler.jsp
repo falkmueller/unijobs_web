@@ -54,7 +54,7 @@ class unicrawler {
             String json = JSONValue.toJSONString(pageData);
             try {
                //write converted json data to a file named "file.json"
-               FileWriter writer = new FileWriter(this.dataPath + Uni + "_" + url.replaceAll("[^\\w\\s]","") + ".json");
+               FileWriter writer = new FileWriter(this.dataPath + Uni.replace(",", "") + "_" + url.replaceAll("[^\\w\\s]","").replace(",", "_") + ".json");
                writer.write(json);
                writer.close();
                return true;

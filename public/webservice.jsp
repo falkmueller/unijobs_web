@@ -28,8 +28,8 @@ class webservice {
         String[][] Unis = {
                 {"Chemnitz_University_of_Technology","https://www.tu-chemnitz.de/tu/stellen.php", "https://www.tu-chemnitz.de/verwaltung/personal/stellen", "true"},
                 {"University_of_Jena","https://www.uni-jena.de/Stellenmarkt.html", "https://www.uni-jena.de/Universit%C3%A4t/Stellenmarkt/", "true"},
-                {"Leipzig_University", "http://www.zv.uni-leipzig.de/universitaet/stellen-und-ausbildung/stellenausschreibungen/nichtwissenschaftliches-personal.html", "", "false"},
-                {"Leipzig_University", "http://www.zv.uni-leipzig.de/universitaet/stellen-und-ausbildung/stellenausschreibungen/wissenschaftliches-personal.html", "", "false"}
+                {"Hochschule_Mittweida", "https://www.hs-mittweida.de/newsampservice/stellenausschreibungen.html", "https://www.hs-mittweida.de/newsampservice/stellenausschreibungen/detail", "true"},
+                {"Bauhaus_University,_Weimar", "http://www.uni-weimar.de/de/universitaet/aktuell/stellenausschreibungen/", "http://www.uni-weimar.de/de/universitaet/aktuell/stellenausschreibungen/", "true"}
             };
 
         unicrawler uniCrawler = new unicrawler();

@@ -5,3 +5,4 @@ external Resources From:
 http://tuckey.org/urlrewrite/
 https://github.com/yasserg/crawler4j
 https://github.com/fangyidong/json-simple
+http://jsoup.org/
