@@ -1,8 +1,16 @@
-Babelfy zum Extrahieren der inhalte auf gecrawlten texten
-Inhalte in Dripel Store übernehmen
+Babelfy 
+	- zum Extrahieren der inhalte auf gecrawlten texten
+	- Substantive übernehmen
+	- TF IDF
+	- Inhalte in Dripel Store übernehmen
 
 Filterung
+Suche
 
 resource.jsp Anzeige anpassen (html und rdf Sicht) und in rdf die baseurl anpassen.
 
-Optional: wie bei relfinder graph virtualisieren  
+Optional: wie bei relfinder graph virtualisieren
+
+Evalution:
+	- SUS: System usibilit Scale
+	- Task driven Evaluation: Testpersonen selben Suche-Scenario auf google und auf Seite machen lassen, messen

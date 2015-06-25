@@ -4,6 +4,7 @@ final class settings {
     public String Fuseki_User = "";
     public String Fuseki_Passwort = "";
     public String Webservide_Passwort = "";
+    public String babelfy_Api_Key = "";
 }
 
 %>

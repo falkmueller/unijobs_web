@@ -15,7 +15,6 @@ class uniparser {
         try {        
             this.FusekiUpdateUrl = new URL(request.getScheme(), 
             request.getServerName(), 
-            request.getServerPort(), 
             "/fuseki/ds/update");
         } catch (Exception e){}
     }

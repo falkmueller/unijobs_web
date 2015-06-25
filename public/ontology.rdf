@@ -5,7 +5,8 @@
 	xmlns:owl="http://www.w3.org/2002/07/owl#"
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
 	xml:base="http://www.leemia.de/seminar/rdf"
-        xml:dbres="http://dbpedia.org/resource/">
+        xml:dbres="http://dbpedia.org/resource/"
+        xml:babelfy="http://babelnet.org/rdf/">
 
 <owl:Ontology rdf:about=""> 
   <rdfs:comment>Uni Job Ontology</rdfs:comment>
@@ -85,7 +86,40 @@
                 <rdfs:label>Keywords</rdfs:label>
                 <rdfs:comment>Keywords</rdfs:comment>
             <rdfs:domain rdf:resource="#job" />
-            <rdfs:range rdf:resource= "xsd#string" />
+            <rdfs:range rdf:resource= "#tag" />
+        </owl:DatatypeProperty>
+
+        <owl:Class rdf:about="tag">
+		<rdfs:label>Tag Words</rdfs:label>
+		<rdfs:comment>Tag Words</rdfs:comment>
+	</owl:Class>
+
+        <owl:DatatypeProperty rdf:ID="Word">
+                <rdfs:label>Word</rdfs:label>
+                <rdfs:comment>Word</rdfs:comment>
+            <rdfs:domain rdf:resource="#tag" />
+            <rdfs:range rdf:resource="xsd#string" />
+        </owl:DatatypeProperty>
+
+        <owl:DatatypeProperty rdf:ID="url">
+                <rdfs:label>url</rdfs:label>
+                <rdfs:comment>url</rdfs:comment>
+            <rdfs:domain rdf:resource="#tag" />
+            <rdfs:range rdf:resource="xsd#anyURI" />
+        </owl:DatatypeProperty>
+
+        <owl:DatatypeProperty rdf:ID="isconcept">
+                <rdfs:label>isconcept</rdfs:label>
+                <rdfs:comment>True: is Concept, False: is named Entity</rdfs:comment>
+            <rdfs:domain rdf:resource="#tag" />
+            <rdfs:range rdf:resource="xsd#boolean" />
+        </owl:DatatypeProperty>
+
+         <owl:DatatypeProperty rdf:ID="babelres">
+                <rdfs:label>babelres</rdfs:label>
+                <rdfs:comment>babelres</rdfs:comment>
+            <rdfs:domain rdf:resource="#tag" />
+            <rdfs:range rdf:resource="babelfy" />
         </owl:DatatypeProperty>
 </rdf:RDF>
 
