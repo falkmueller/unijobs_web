@@ -3,12 +3,13 @@
          java.net.*, java.io.*, java.security.*, java.math.BigInteger, java.util.UUID,
          org.jsoup.Jsoup, org.jsoup.nodes.Document, org.jsoup.nodes.Element, org.jsoup.select.Elements,
          java.util.regex.Pattern, java.util.regex.Matcher" 
-%><%
+%><%@include file="../private/babelfy.jsp"%><%
 
 class uniparser {
 
     private String dataPath;
     private URL FusekiUpdateUrl; 
+    private babelfy Babelfy;
 
     public uniparser(){
         this.dataPath = getServletContext().getRealPath("/") + "data/";
@@ -17,6 +18,8 @@ class uniparser {
             request.getServerName(), 
             "/fuseki/ds/update");
         } catch (Exception e){}
+
+        this.Babelfy = new babelfy();
     }
 
     public String parse(){
@@ -65,14 +68,14 @@ class uniparser {
         }
     }
 
-    private void addJob(String Uni, String Url, String Title, String Content, String faculty, String salaryscale) throws MalformedURLException, UnsupportedEncodingException, IOException {
+    private void addJob(String Uni, String Url, String Title, String Content, String salaryscale) throws MalformedURLException, UnsupportedEncodingException, IOException {
 
         settings Settings = new settings();
         String userPassword = Settings.Fuseki_User + ":" + Settings.Fuseki_Passwort;
         String JobId = this.BuildJobId(Uni, Url);
         
-        Content = Content.replace("\n", "").replace("\r", "");
-        Content = Content.replace("\"", "\\\"");
+        String sContent = Content.replace("\n", "").replace("\r", "");
+        sContent = sContent.replace("\"", "\\\"");
         Title = Title.replace("\"", "\\\"");
 
         String SparQLQuery = "PREFIX dc: <http://tomcat.falk-m.de/> \n"
@@ -87,9 +90,8 @@ class uniparser {
                                 + " onto:title \"" + Title + "\";\n"
                                 + " onto:url \"" + Url + "\";\n"
                                 + " onto:uid \"" + JobId + "\";\n"
-                                + " onto:description \"" + Content + "\";\n"
+                                + " onto:description \"" + sContent + "\";\n"
                                 + " onto:in_uni <" + "http://dbpedia.org/resource/" + Uni + ">;\n"
-                                + " onto:faculty \"" + faculty + "\";\n"
                                 + " onto:salaryscale \"" + salaryscale + "\";\n"
                                 + "onto:ismanual false. \n"
                             + " }";
@@ -120,6 +122,8 @@ class uniparser {
 
         writer.close();
         reader.close();
+
+        this.Babelfy.AddJobTags(JobId, Content);
     }
 
     private String addJob(JSONObject JobParseData) throws MalformedURLException, UnsupportedEncodingException, IOException{
@@ -148,7 +152,7 @@ class uniparser {
             htmlContent = JobContent.first().html();
         }
 
-            this.addJob(Uni, (String)JobParseData.get("Url"), JobTitle, htmlContent, "", "" + ExtractSalaryscale(htmlContent));
+            this.addJob(Uni, (String)JobParseData.get("Url"), JobTitle, htmlContent, "" + ExtractSalaryscale(htmlContent));
 
         return "";
     }

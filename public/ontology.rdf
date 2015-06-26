@@ -6,7 +6,7 @@
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
 	xml:base="http://www.leemia.de/seminar/rdf"
         xml:dbres="http://dbpedia.org/resource/"
-        xml:babelfy="http://babelnet.org/rdf/">
+        xml:bn="http://babelnet.org/rdf/">
 
 <owl:Ontology rdf:about=""> 
   <rdfs:comment>Uni Job Ontology</rdfs:comment>
@@ -75,13 +75,6 @@
             <rdfs:range rdf:resource= "xsd#string" />
         </owl:DatatypeProperty>
 
-        <owl:DatatypeProperty rdf:ID="faculty" >
-                <rdfs:label>Gehaltsgruppe</rdfs:label>
-                <rdfs:comment>Gehaltsgruppe</rdfs:comment>
-            <rdfs:domain rdf:resource="#job" />
-            <rdfs:range rdf:resource= "xsd#string" />
-        </owl:DatatypeProperty>
-
         <owl:DatatypeProperty rdf:ID="keywords" >
                 <rdfs:label>Keywords</rdfs:label>
                 <rdfs:comment>Keywords</rdfs:comment>
@@ -119,7 +112,7 @@
                 <rdfs:label>babelres</rdfs:label>
                 <rdfs:comment>babelres</rdfs:comment>
             <rdfs:domain rdf:resource="#tag" />
-            <rdfs:range rdf:resource="babelfy" />
+            <rdfs:range rdf:resource="bn" />
         </owl:DatatypeProperty>
 </rdf:RDF>
 
