@@ -21,7 +21,22 @@
             Stadt: {{uni.cityname.value}}<br/>
             <span ng-if="uni.state">Bundesland: {{uni.state.value}}<br/></span>
             Uni: <a target="_blank" href="{{uni.uniwebsite.value}}">{{uni.uniname.value}}</a>
-
+            
+            <div ng-if="uni.salaryscale.value != 0">
+                <hr/>
+                Gehaltsgruppe: {{uni.salaryscale.value}} TV-L
+            </div>
+            
+            <hr/>
+            <h3>Schlagworte</h3>
+             <ul class="row" ng-repeat="obj in keywords">
+                 <li ng-if="obj.isconcept.value == 'true'" class="keyword_concept">
+                     {{obj.word.value}}
+                 </li>
+                <li ng-if="obj.isconcept.value != 'true'" class="keyword_named_entity">
+                     {{obj.word.value}}
+                 </li>
+             </ul>
         </div>
     </div>
   </div>

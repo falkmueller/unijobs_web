@@ -4,7 +4,7 @@
         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
 	xmlns:owl="http://www.w3.org/2002/07/owl#"
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
-	xml:base="http://www.leemia.de/seminar/rdf"
+	xml:base="http://tomcat.falk-m.de/unijobs/resource"
         xml:dbres="http://dbpedia.org/resource/"
         xml:bn="http://babelnet.org/rdf/">
 

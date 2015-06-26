@@ -21,6 +21,13 @@
                                 $scope.DescHtml = $sce.trustAsHtml($scope.uni.jobdescription.value);
                              });
                       });
+                      
+             GetJobKeyWords(uid, function(res){
+                          $scope.$apply(function () {
+                                $scope.keywords = res;
+                                console.log(res);
+                             });
+                      });
         });
     });
 }(define));

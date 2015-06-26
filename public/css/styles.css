@@ -55,10 +55,23 @@
     text-transform: uppercase;}
 .table .row {border-bottom: 1px solid #ddd;}
 
+.job_list_item { border: 1px solid #CCC; margin-bottom: 10px;}
+.job_list_item .col-sm-3 {padding: 10px; overflow: hidden;}
+.job_list_item .col-sm-9 {padding: 10px;}
+.job_list_item .jobtitle {font-weight: bold;}
+.job_list_item .btn {float: right;}
+.job_list_item .descContainer {min-height: 100px;}
+.job_list_item .image img {height: 150px;}
+
 /* Crawl
 ============================================================================= */
 .ajax-loader { min-height: 20px; background-image: url(../images/ajax-loader.gif);
                 background-repeat: no-repeat; background-position: center 0;}
+
+/* Detailseite
+============================================================================= */
+.keyword_named_entity {font-weight: bold;}
+.keyword_concept {}
 
 /* ANIMATIONS
 ============================================================================= */
