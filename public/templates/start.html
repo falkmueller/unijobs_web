@@ -1,7 +1,7 @@
 <view-title>Uni Jobs Suchen</view-title>
 
 <div class="row">
-    <div class="col-sm-9">
+    <div class="col-sm-8">
         <h2>Übersicht</h2>
 
         <div class="row job_list_item" ng-repeat="obj in items">
@@ -28,15 +28,51 @@
         <a class="btn btn-info" ng-click="loadmore(-1)">zurück</a> {{from/pp+1}} Seite <a class="btn btn-info" ng-click="loadmore(1)">weitere</a>
 
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-4">
         <h2>Suche</h2>
-        <form class="navbar-form navbar-right" role="search" ng-submit="loadmore(0)">
+        <form class="form-inline" role="search" ng-submit="loadmore(0)">
         <div class="form-group">
           <input type="text" ng-model="SearchValue" class="form-control" placeholder="Suchbegriff">
         </div>
         <button type="submit" class="btn btn-default">Suchen</button>
       </form>
         <h2>Filter</h2>
+        <form>
+            <div class="form-group">
+                <label for="filter_Salaryscale">Gehaltsgruppe</label>
+                <select class="form-control" id="filter_Salaryscale">   
+                    <option selected="selected" value="0">wählen...</option>
+                    <option ng-repeat="Salaryscale in SalaryscaleFilter" value="{{Salaryscale.salaryscale.value}}">{{Salaryscale.salaryscale.value}} TV-L</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="filter_uni">Universität</label>
+                <select class="form-control" id="filter_uni">   
+                    <option selected="selected" value="0">wählen...</option>
+                    <option ng-repeat="uni in unis" value="{{uni.uni}}">{{uni.uniname}}</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="filter_city">Stadt</label>
+                <select class="form-control" id="filter_city">   
+                    <option selected="selected" value="0">wählen...</option>
+                    <option ng-repeat="city in cities" value="{{city.city}}">{{city.cityname}}</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Schlagworte</label>
+                <div class="clearfix">
+                    <div ng-repeat="Keyword in Keywords" ng-class="{true:'filter_concept', false:'filter_named'}[Keyword.ISCONCEPT.value == 'true']">{{Keyword.WORD.value}} ({{Keyword.ELEMENTCOUNT.value}}) <!--{{Keyword.babelres.value}}--></div>
+                </div>
+            </div>
+            
+            
+        </form>
+        
+        
     </div>
 </div>
     

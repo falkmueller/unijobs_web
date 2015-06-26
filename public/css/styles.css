@@ -63,6 +63,9 @@
 .job_list_item .descContainer {min-height: 100px;}
 .job_list_item .image img {height: 150px;}
 
+.filter_concept { float: left; background-color: #FFFFCC; margin: 5px; padding: 5px; cursor: pointer;}
+.filter_named {float: left; background-color: #0099FF; color: #FFF; margin: 5px; padding: 5px; cursor: pointer;}
+
 /* Crawl
 ============================================================================= */
 .ajax-loader { min-height: 20px; background-image: url(../images/ajax-loader.gif);

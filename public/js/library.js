@@ -1,3 +1,13 @@
+var PREFIXE = "PREFIX dc: <http://tomcat.falk-m.de/> \n" +
+                "PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#> \n" +
+                "PREFIX dbonto: <http://dbpedia.org/ontology/> \n" +
+                "PREFIX dbres: <http://dbpedia.org/resource/> \n" +
+                "PREFIX dbprop: <http://dbpedia.org/property/> \n" +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
+                "PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n" +
+                "PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> \n";
+
 /*****************************************
  * General Functions
  * ****************************************/
@@ -72,11 +82,7 @@ function toggle_console(){
 function AddJob(Apiuser, ApiPassword, Job){
                var jobId = GetRandom();
     
-             var query = "PREFIX dc: <http://tomcat.falk-m.de/> \n"
-                          + " PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#>\n"
-                          + " PREFIX dbres: <http://dbpedia.org/resource/>\n"
-                          + " PREFIX dbonto: <http://dbpedia.org/ontology/>\n"
-                          + " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
+             var query = PREFIXE 
                           + " INSERT DATA { dc:Job_" + jobId + "\n"    
 				+ " rdf:type onto:job;\n"
                                 + " onto:title \"" + Job.title + "\";\n"
@@ -109,21 +115,17 @@ function AddJob(Apiuser, ApiPassword, Job){
 
 function GetAllUnis(CallBackFn){
     
-    var query = "PREFIX  onto: <http://dbpedia.org/ontology/>\n" +
-                "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                "PREFIX dbres: <http://dbpedia.org/resource/>\n" +
-                "PREFIX prop: <http://dbpedia.org/property/>\n" + 
-                "\n" +
+    var query = PREFIXE +
                 "SELECT ?uni ?name (group_concat(distinct ?city_name; separator = \", \") AS ?CITY) (group_concat(distinct ?state_name ; separator = \", \") AS ?STATE) \n" +
                 "WHERE\n" +
-                "  { ?uni rdf:type onto:University .\n" +
-                "    ?uni prop:country dbres:Germany.\n" +
-                "    ?uni prop:name ?name. \n" +
+                "  { ?uni rdf:type dbonto:University .\n" +
+                "    ?uni dbprop:country dbres:Germany.\n" +
+                "    ?uni dbprop:name ?name. \n" +
                 "    OPTIONAL { \n" +
-                "       ?uni onto:city ?city.  \n" +
+                "       ?uni dbonto:city ?city.  \n" +
                 "       ?city rdfs:label ?city_name. \n" +
                 "       OPTIONAL { \n" +
-                "           ?city prop:bundesland ?state_name. \n" +
+                "           ?city dbprop:bundesland ?state_name. \n" +
                 "           FILTER(langMatches(lang(?state_name), \"EN\")) \n" +
                 "       } \n" +
                 "       FILTER(langMatches(lang(?city_name), \"en\")) \n" +
@@ -156,14 +158,7 @@ function GetJobs(cFrom, cPP, CallBackFn, SearchValue){
     var SeachQueryPart = "";
     if (SearchValue){SeachQueryPart = GetSeachQueryPart(SearchValue);}
     
-    var query = "PREFIX dc: <http://tomcat.falk-m.de/> \n" +
-                "PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#> \n" +
-                "PREFIX dbonto: <http://dbpedia.org/ontology/> \n" +
-                "PREFIX dbres: <http://dbpedia.org/resource/> \n" +
-                "PREFIX dbprop: <http://dbpedia.org/property/> \n" +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
-                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
-                "PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n" +
+    var query = PREFIXE +
                 "select ?job ?uni ?city ?uid ?jobtitle ?uniname ?cityname ?salaryscale ?unilogo \n" +
                 "WHERE { " +
                 "   SERVICE <http://dbpedia.org/sparql/> { \n" +
@@ -227,15 +222,7 @@ function GetSeachQueryPart(Searchvalue){
 }
 
 function GetJobDetails(uid, CallBackFn){
-    var query = "PREFIX dc: <http://tomcat.falk-m.de/> \n" +
-                "PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#> \n" +
-                "PREFIX dbonto: <http://dbpedia.org/ontology/> \n" +
-                "PREFIX dbres: <http://dbpedia.org/resource/> \n" +
-                "PREFIX dbprop: <http://dbpedia.org/property/> \n" +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
-                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
-                "PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n" +
-                "PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> \n" +
+    var query = PREFIXE +
                 "select * \n" +
                 "WHERE { ?job  rdf:type onto:job; \n" +
                 "   onto:uid \"" + uid + "\"; \n" +
@@ -275,8 +262,7 @@ function GetJobDetails(uid, CallBackFn){
 }
 
 function GetJobKeyWords(uid, CallBackFn){
-    var query = "PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#> \n" +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+    var query = PREFIXE +
                 "select * \n" +
                 "WHERE { ?job  rdf:type onto:job; \n" +
                 "   onto:uid \"" + uid + "\"; \n" +
@@ -297,6 +283,122 @@ function GetJobKeyWords(uid, CallBackFn){
                 error: function(res){
                     AddMessage('GetJobKeyWords','Es ist ein Fehler aufgetreten','danger');
                     Console("Fehler bei GetJobKeyWords", "StatusCode: " + res.status + "; StatusText: " + res.statusText + "\n" + res.responseText);
+                }
+              });
+}
+
+function filter_GetSalaryscale(CallBackFn){
+    var query = PREFIXE +
+                "select ?salaryscale\n" +
+                "WHERE {  \n" +
+                "    ?job  rdf:type onto:job.\n" +
+                "    ?job onto:salaryscale ?salaryscale;\n" +
+                "}\n" +
+                "GROUP BY ?salaryscale\n";
+
+        
+        Console("Abruf von filter_GetSalaryscale: ", query);
+              
+               $.ajax({
+                url: "/fuseki/ds/query",
+                method: "POST",
+                data: {query: query},
+                success: function(res){
+                    var result = res.results.bindings;
+                     result.sort(function(a, b){return parseInt(a.salaryscale.value) - parseInt(b.salaryscale.value)});
+                    CallBackFn(result);  
+            },
+                error: function(res){
+                    AddMessage('filter_GetSalaryscale','Es ist ein Fehler aufgetreten','danger');
+                    Console("Fehler bei filter_GetSalaryscale", "StatusCode: " + res.status + "; StatusText: " + res.statusText + "\n" + res.responseText);
+                }
+              });
+}
+
+
+function filter_GetUnisAndCitys(CallBackFn){
+    var query =  PREFIXE + 
+                "select ?uni ?uniname ?cityname ?city\n" +
+                "WHERE {  \n" +
+                "   SERVICE <http://dbpedia.org/sparql/> { \n" +
+                "    		?uni rdf:type dbonto:University.\n" +
+                "    		?uni dbprop:country dbres:Germany.\n" +
+                "            ?uni dbprop:name ?uniname. \n" +
+                "    		?uni dbonto:city ?city.\n" +
+                "    		?city rdfs:label ?cityname\n" +
+                "               }. \n" +
+                "    ?job  rdf:type onto:job.\n" +
+                "    ?job onto:in_uni ?uni;\n" +
+                " FILTER(langMatches(lang(?uniname), \"EN\")) .\n" +
+                " FILTER(langMatches(lang(?cityname), \"EN\")).\n" +
+                "}\n" +
+                "GROUP BY ?uni ?uniname ?cityname ?city\n";
+
+        Console("Abruf von filter_GetUnisAndCitys: ", query);
+              
+               $.ajax({
+                url: "/fuseki/ds/query",
+                method: "POST",
+                data: {query: query},
+                success: function(res){
+                    var result = {unis: [], cities: []};
+                    var uniqueCitys = [];
+                    var uniqueUnis = [];
+                    
+                    for (var i = 0; i < res.results.bindings.length; i++) {
+                        if(uniqueUnis.indexOf(res.results.bindings[i].uniname.value) < 0){
+                            uniqueUnis.push(res.results.bindings[i].uniname.value);
+                            result.unis.push({uni: res.results.bindings[i].uni.value, uniname: res.results.bindings[i].uniname.value});
+                        }
+                        
+                        if(uniqueCitys.indexOf(res.results.bindings[i].cityname.value) < 0){
+                            uniqueCitys.push(res.results.bindings[i].cityname.value);
+                            result.cities.push({city: res.results.bindings[i].city.value, cityname: res.results.bindings[i].cityname.value});
+                        }
+                    }
+                    
+                    uniqueUnis.sort();
+                    result.unis.sort(function(a, b){return uniqueUnis.indexOf(a.uniname) - uniqueUnis.indexOf(b.uniname)});
+                    uniqueCitys.sort();
+                    result.cities.sort(function(a, b){return uniqueCitys.indexOf(a.cityname) - uniqueCitys.indexOf(b.cityname)});
+                    
+                    CallBackFn(result);  
+            },
+                error: function(res){
+                    AddMessage('filter_GetUnisAndCitys','Es ist ein Fehler aufgetreten','danger');
+                    Console("Fehler bei filter_GetUnisAndCitys", "StatusCode: " + res.status + "; StatusText: " + res.statusText + "\n" + res.responseText);
+                }
+              });
+}
+
+function filter_GetKeyWords(CallBackFn){
+    var query = PREFIXE +
+                "select ?babelres (SAMPLE(?Word) AS ?WORD) (SAMPLE(?isconcept) AS ?ISCONCEPT) (COUNT(?babelres) AS ?ELEMENTCOUNT)\n" +
+                "WHERE {  \n" +
+                "    ?job  rdf:type onto:job.\n" +
+                "    ?job onto:keywords ?keywords.\n" +
+                "    ?keywords onto:Word ?Word.\n" +
+                "    ?keywords onto:isconcept ?isconcept.\n" +
+                "    ?keywords onto:babelres ?babelres.\n" +
+                "}\n" +
+                "GROUP BY ?babelres\n" +
+                "HAVING (COUNT(?babelres) < 20)" +
+                "ORDER BY DESC(?ELEMENTCOUNT)\n" +
+                "LIMIT 100\n";
+
+        
+        Console("Abruf von filter_GetKeyWords: ", query);
+              
+               $.ajax({
+                url: "/fuseki/ds/query",
+                method: "POST",
+                data: {query: query},
+                success: function(res){
+                    CallBackFn(res.results.bindings);  
+            },
+                error: function(res){
+                    AddMessage('filter_GetKeyWords','Es ist ein Fehler aufgetreten','danger');
+                    Console("Fehler bei filter_GetKeyWords", "StatusCode: " + res.status + "; StatusText: " + res.statusText + "\n" + res.responseText);
                 }
               });
 }

@@ -19,7 +19,25 @@
             };
             
             $scope.loadmore(0);
+            
+            filter_GetSalaryscale(function(res){
+                $scope.$apply(function () {
+                      $scope.SalaryscaleFilter = res;
+                   });
+                });
 
+            filter_GetUnisAndCitys(function(res){
+                $scope.$apply(function () {
+                      $scope.unis = res.unis;
+                      $scope.cities = res.cities;
+                   });
+                });
+                
+            filter_GetKeyWords(function(res){
+                $scope.$apply(function () {
+                      $scope.Keywords = res;
+                   });
+                });
         });
     });
 }(define));
