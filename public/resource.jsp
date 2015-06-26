@@ -34,7 +34,7 @@
             try{
                 URL FusekiUpdateUrl = new URL(request.getScheme(), 
                 request.getServerName(), 
-                "/fuseki/ds/update");
+                "/fuseki/ds/query");
 
 
                 String SparQLQuery = "PREFIX dc: <http://tomcat.falk-m.de/unijobs/resource/> \n"
