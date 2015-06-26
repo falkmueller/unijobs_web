@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title><%=request.getParameter("oid")%></title>
+    <title>Resource: <%=request.getParameter("oid")%></title>
 
     <!-- Bootstrap -->
     <link href="../public/css/bootstrap.min.css" rel="stylesheet">
@@ -34,7 +34,8 @@
             try{
                 URL FusekiUpdateUrl = new URL(request.getScheme(), 
                 request.getServerName(), 
-                "/fuseki/ds/query");
+                "/fuseki/ds/update");
+
 
                 String SparQLQuery = "PREFIX dc: <http://tomcat.falk-m.de/unijobs/resource/> \n"
                                   + " PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#>\n"
