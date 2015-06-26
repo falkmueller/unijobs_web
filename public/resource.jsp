@@ -1,9 +1,11 @@
 <%@ page import="org.json.simple.JSONValue, org.json.simple.JSONObject, org.json.simple.JSONArray,
          java.nio.file.Files, java.nio.file.Paths,
-         java.net.*, java.io.*, java.security.*, java.math.BigInteger, java.util.UUID,
          org.jsoup.Jsoup, org.jsoup.nodes.Document, org.jsoup.nodes.Element, org.jsoup.select.Elements,
          java.util.regex.Pattern, java.util.regex.Matcher,
-         java.util.Map, java.util.HashMap, java.util.Collection, java.util.Collections, java.util.Comparator, java.util.ArrayList" 
+         java.util.Map, java.util.HashMap, java.util.Collection, java.util.Collections, java.util.Comparator, java.util.ArrayList,
+         org.apache.http.HttpResponse, org.apache.http.client.HttpClient, org.apache.http.impl.client.DefaultHttpClient, org.apache.http.client.methods.HttpPost
+         ,java.util.List, org.apache.http.NameValuePair, org.apache.http.client.entity.UrlEncodedFormEntity, org.apache.http.message.BasicNameValuePair,
+         java.io.BufferedReader, java.io.InputStreamReader" 
 %><%@include file="../settings.jsp"%>
 
 <html>
@@ -31,13 +33,7 @@
 
         <%
 
-            try{
-                URL FusekiUpdateUrl = new URL(request.getScheme(), 
-                request.getServerName(), 
-                "/fuseki/ds/query");
-
-
-                String SparQLQuery = "PREFIX dc: <http://tomcat.falk-m.de/unijobs/resource/> \n"
+            String SparQLQuery = "PREFIX dc: <http://tomcat.falk-m.de/unijobs/resource/> \n"
                                   + " PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#>\n"
                                   + " PREFIX dbres: <http://dbpedia.org/resource/>\n"
                                   + " PREFIX dbonto: <http://dbpedia.org/ontology/>\n"
@@ -49,32 +45,29 @@
                                   + "       OPTIONAL { ?o onto:babelres ?Key_r }"
                                   + " }";
 
-                String body = "query=" + URLEncoder.encode( SparQLQuery, "UTF-8" );
+            try{
+                String url = request.getScheme() + "://" + request.getServerName() + "/fuseki/ds/query";
+                HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost(url);
 
-                HttpURLConnection connection = (HttpURLConnection) FusekiUpdateUrl.openConnection();
-                connection.setRequestMethod( "GET" );
-                connection.setDoInput( true );
-                connection.setDoOutput( true );
-                connection.setUseCaches( false );
-                connection.setRequestProperty( "Content-Type",
-                                               "application/x-www-form-urlencoded; charset=UTF-8" );
-                connection.setRequestProperty( "Content-Length", String.valueOf(body.length()) );
+      
+                List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+		urlParameters.add(new BasicNameValuePair("query", SparQLQuery));
+		post.setEntity(new UrlEncodedFormEntity(urlParameters));
 
-                OutputStreamWriter writer = new OutputStreamWriter( connection.getOutputStream() );
-                writer.write( body );
-                writer.flush();
+                post.setHeader("Accept", "application/sparql-results+json");
+                post.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");      
+                
+                HttpResponse resp = client.execute(post);
 
-                BufferedReader reader = new BufferedReader(
-                                  new InputStreamReader(connection.getInputStream()) );
-
-                String jsonString = "";
-                for ( String line; (line = reader.readLine()) != null; )
-                {
-                  jsonString += line;
-                }
-
-                writer.close();
-                reader.close();
+                BufferedReader rd = new BufferedReader(
+                        new InputStreamReader(resp.getEntity().getContent()));
+ 
+		String jsonString = "";
+		String line = "";
+		while ((line = rd.readLine()) != null) {
+			jsonString += line;
+		}
                 
                 Object obj=JSONValue.parse(jsonString);
                 
