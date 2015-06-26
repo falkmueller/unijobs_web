@@ -65,6 +65,7 @@
 
 .filter_concept { float: left; background-color: #FFFFCC; margin: 5px; padding: 5px; cursor: pointer;}
 .filter_named {float: left; background-color: #0099FF; color: #FFF; margin: 5px; padding: 5px; cursor: pointer;}
+.filter_selected {color: #FFF; background-color: #0000FF;}
 
 /* Crawl
 ============================================================================= */

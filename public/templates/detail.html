@@ -1,7 +1,7 @@
 <view-title>Details</view-title>
 
 <div class="panel panel-default">
-  <div class="panel-heading">{{uni.jobtitle.value}}</div>
+  <div class="panel-heading">{{job.jobtitle.value}}</div>
   <div class="panel-body">
     <div class="row">
         <div class="col-sm-9">
@@ -11,20 +11,21 @@
             
             <div ng-bind-html="DescHtml"></div>
             
-            <a target="_blank" href="{{uni.url.value}}" class="btn btn-default">Zur Anzeige</a>
+            <a target="_blank" href="{{job.url.value}}" class="btn btn-default">Zur Anzeige</a>
+            <a target="_blank" href="{{job.job.value}}" class="btn btn-default pull-right"><span class="glyphicon glyphicon-education"></span></a>
         </div>
         <div class="col-sm-3">
-            <div ng-if="uni.unilogo">
-                <img ng-src="{{uni.unilogo.value}}" width="100%" />
+            <div ng-if="job.unilogo">
+                <img ng-src="{{job.unilogo.value}}" width="100%" />
             </div>
 
             Stadt: {{uni.cityname.value}}<br/>
-            <span ng-if="uni.state">Bundesland: {{uni.state.value}}<br/></span>
-            Uni: <a target="_blank" href="{{uni.uniwebsite.value}}">{{uni.uniname.value}}</a>
+            <span ng-if="uni.state">Bundesland: {{job.state.value}}<br/></span>
+            Uni: <a target="_blank" href="{{job.uniwebsite.value}}">{{job.uniname.value}}</a>
             
-            <div ng-if="uni.salaryscale.value != 0">
+            <div ng-if="job.salaryscale.value != 0">
                 <hr/>
-                Gehaltsgruppe: {{uni.salaryscale.value}} TV-L
+                Gehaltsgruppe: {{job.salaryscale.value}} TV-L
             </div>
             
             <hr/>

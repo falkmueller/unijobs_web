@@ -1,4 +1,4 @@
-var PREFIXE = "PREFIX dc: <http://tomcat.falk-m.de/> \n" +
+var PREFIXE = "PREFIX dc: <http://tomcat.falk-m.de/unijobs/resource/> \n" +
                 "PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#> \n" +
                 "PREFIX dbonto: <http://dbpedia.org/ontology/> \n" +
                 "PREFIX dbres: <http://dbpedia.org/resource/> \n" +
@@ -153,10 +153,34 @@ function GetAllUnis(CallBackFn){
               });
 }
 
-function GetJobs(cFrom, cPP, CallBackFn, SearchValue){
+function GetJobs(cFrom, cPP, CallBackFn, SearchValue, filter){
     
     var SeachQueryPart = "";
     if (SearchValue){SeachQueryPart = GetSeachQueryPart(SearchValue);}
+    
+    var FilterQueryPart = "";
+    var GroupByPart = "";
+    if(filter){
+        if (filter.uni!== ""){
+            FilterQueryPart += " FILTER (?uni = <" + filter.uni + ">) \n";
+        }
+        
+        if (filter.city!== ""){
+            FilterQueryPart += " FILTER ( ?city = <" + filter.city + ">) \n";
+        }
+        
+        if (filter.salaryscale!== ""){
+            FilterQueryPart += " ?job onto:salaryscale \"" + filter.salaryscale + "\". \n";
+        }
+        
+        if (filter.keywords.length > 0){
+           
+             for (var i = 0; i < filter.keywords.length; i++) {
+                 FilterQueryPart += " ?job onto:keywords ?keywords" + i + ". ";
+                FilterQueryPart += " ?keywords" + i + " onto:babelres <" + filter.keywords[i] + ">. ";
+            }
+        }
+    }
     
     var query = PREFIXE +
                 "select ?job ?uni ?city ?uid ?jobtitle ?uniname ?cityname ?salaryscale ?unilogo \n" +
@@ -178,7 +202,9 @@ function GetJobs(cFrom, cPP, CallBackFn, SearchValue){
                 " FILTER(langMatches(lang(?cityname), \"EN\")). \n" +
                 " FILTER(langMatches(lang(?uniname), \"EN\")) \n" +
                 SeachQueryPart +
+                FilterQueryPart +
                 "}" + 
+                GroupByPart +
                 "LIMIT   " + cPP + " " +
                 "OFFSET  " + cFrom;
         
@@ -289,7 +315,7 @@ function GetJobKeyWords(uid, CallBackFn){
 
 function filter_GetSalaryscale(CallBackFn){
     var query = PREFIXE +
-                "select ?salaryscale\n" +
+                "select ?salaryscale (COUNT(?salaryscale) AS ?ELEMENTCOUNT)\n" +
                 "WHERE {  \n" +
                 "    ?job  rdf:type onto:job.\n" +
                 "    ?job onto:salaryscale ?salaryscale;\n" +
@@ -318,7 +344,7 @@ function filter_GetSalaryscale(CallBackFn){
 
 function filter_GetUnisAndCitys(CallBackFn){
     var query =  PREFIXE + 
-                "select ?uni ?uniname ?cityname ?city\n" +
+                "select ?uni ?uniname ?cityname ?city (COUNT(?uni) AS ?unicount)\n" +
                 "WHERE {  \n" +
                 "   SERVICE <http://dbpedia.org/sparql/> { \n" +
                 "    		?uni rdf:type dbonto:University.\n" +
@@ -348,12 +374,16 @@ function filter_GetUnisAndCitys(CallBackFn){
                     for (var i = 0; i < res.results.bindings.length; i++) {
                         if(uniqueUnis.indexOf(res.results.bindings[i].uniname.value) < 0){
                             uniqueUnis.push(res.results.bindings[i].uniname.value);
-                            result.unis.push({uni: res.results.bindings[i].uni.value, uniname: res.results.bindings[i].uniname.value});
+                            result.unis.push({uni: res.results.bindings[i].uni.value, uniname: res.results.bindings[i].uniname.value, count:  parseInt(res.results.bindings[i].unicount.value)});
+                        } else {
+                            result.unis[uniqueUnis.indexOf(res.results.bindings[i].uniname.value)].count += parseInt(res.results.bindings[i].unicount.value);
                         }
                         
                         if(uniqueCitys.indexOf(res.results.bindings[i].cityname.value) < 0){
                             uniqueCitys.push(res.results.bindings[i].cityname.value);
-                            result.cities.push({city: res.results.bindings[i].city.value, cityname: res.results.bindings[i].cityname.value});
+                            result.cities.push({city: res.results.bindings[i].city.value, cityname: res.results.bindings[i].cityname.value, count: parseInt(res.results.bindings[i].unicount.value)});
+                        } else {
+                            result.cities[uniqueCitys.indexOf(res.results.bindings[i].cityname.value)].count += parseInt(res.results.bindings[i].unicount.value);
                         }
                     }
                     
@@ -382,7 +412,7 @@ function filter_GetKeyWords(CallBackFn){
                 "    ?keywords onto:babelres ?babelres.\n" +
                 "}\n" +
                 "GROUP BY ?babelres\n" +
-                "HAVING (COUNT(?babelres) < 20)" +
+                "HAVING (COUNT(?babelres) < 10)\n" +
                 "ORDER BY DESC(?ELEMENTCOUNT)\n" +
                 "LIMIT 100\n";
 

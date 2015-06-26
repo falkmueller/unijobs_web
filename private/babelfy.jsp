@@ -36,7 +36,7 @@ class babelfy{
 
         if(al.size() == 0){return;}
 
-        String SparQLQuery = "PREFIX dc: <http://tomcat.falk-m.de/> \n"
+        String SparQLQuery = "PREFIX dc: <http://tomcat.falk-m.de/unijobs/resource/> \n"
                           + " PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#>\n"
                           + " PREFIX dbres: <http://dbpedia.org/resource/>\n"
                           + " PREFIX dbonto: <http://dbpedia.org/ontology/>\n"

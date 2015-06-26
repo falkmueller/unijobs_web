@@ -36,14 +36,13 @@
                 request.getServerName(), 
                 "/fuseki/ds/query");
 
-                String SparQLQuery = "PREFIX dc: <http://tomcat.falk-m.de/> \n"
+                String SparQLQuery = "PREFIX dc: <http://tomcat.falk-m.de/unijobs/resource/> \n"
                                   + " PREFIX  onto: <http://tomcat.falk-m.de/unijobs/public/ontology.rdf#>\n"
                                   + " PREFIX dbres: <http://dbpedia.org/resource/>\n"
                                   + " PREFIX dbonto: <http://dbpedia.org/ontology/>\n"
                                   + " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
                                   + " select * "
-                                  + "WHERE { ?job rdf:type onto:job. "
-                                  + "      ?job onto:uid \"" + request.getParameter("oid") + "\". "
+                                  + "WHERE { FILTER (?job = dc:" + request.getParameter("oid") + ") "
                                   + "       ?job ?p ?o."
                                   + "       OPTIONAL { ?o onto:Word ?Key_w }"
                                   + "       OPTIONAL { ?o onto:babelres ?Key_r }"
