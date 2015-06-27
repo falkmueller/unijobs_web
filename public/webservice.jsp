@@ -29,7 +29,9 @@ class webservice {
                 {"Chemnitz_University_of_Technology","https://www.tu-chemnitz.de/tu/stellen.php", "https://www.tu-chemnitz.de/verwaltung/personal/stellen", "true"},
                 {"University_of_Jena","https://www.uni-jena.de/Stellenmarkt.html", "https://www.uni-jena.de/Universit%C3%A4t/Stellenmarkt/", "true"},
                 {"Hochschule_Mittweida", "https://www.hs-mittweida.de/newsampservice/stellenausschreibungen.html", "https://www.hs-mittweida.de/newsampservice/stellenausschreibungen/detail", "true"},
-                {"Bauhaus_University,_Weimar", "http://www.uni-weimar.de/de/universitaet/aktuell/stellenausschreibungen/", "http://www.uni-weimar.de/de/universitaet/aktuell/stellenausschreibungen/", "true"}
+                {"Bauhaus_University,_Weimar", "http://www.uni-weimar.de/de/universitaet/aktuell/stellenausschreibungen/", "http://www.uni-weimar.de/de/universitaet/aktuell/stellenausschreibungen/", "true"},
+                {"Merseburg_University_of_Applied_Sciences", "http://www.hs-merseburg.de/karriere/stellenausschreibungen/", "http://www.hs-merseburg.de/karriere/stellenausschreibungen/angebot/", "true"},
+                {"Hochschule_Harz", "https://www.hs-harz.de/stellenausschreibungen/", "https://www.hs-harz.de/stellenausschreibungen/news/detail/", "true"}
             };
 
         unicrawler uniCrawler = new unicrawler();

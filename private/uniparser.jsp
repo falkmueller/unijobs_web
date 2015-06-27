@@ -144,6 +144,10 @@ class uniparser {
              JobTitle = doc.select("H1").first().text();
         } else if (Uni.equals("Bauhaus_University,_Weimar")) {
              JobContent = doc.select("#content_main");
+        } else if (Uni.equals("Merseburg_University_of_Applied_Sciences")) {
+             JobContent = doc.select(".news-single-item");
+        } else if (Uni.equals("Hochschule_Harz")) {
+             JobContent = doc.select(".tx-news-article");
         } else {
             JobContent = doc.select("body");
         }
