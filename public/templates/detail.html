@@ -19,8 +19,8 @@
                 <img ng-src="{{job.unilogo.value}}" width="100%" />
             </div>
 
-            Stadt: {{uni.cityname.value}}<br/>
-            <span ng-if="uni.state">Bundesland: {{job.state.value}}<br/></span>
+            Stadt: {{job.cityname.value}}<br/>
+            <span ng-if="job.state">Bundesland: {{job.state.value}}<br/></span>
             Uni: <a target="_blank" href="{{job.uniwebsite.value}}">{{job.uniname.value}}</a>
             
             <div ng-if="job.salaryscale.value != 0">
