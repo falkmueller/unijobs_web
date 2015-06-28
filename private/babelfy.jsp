@@ -27,7 +27,7 @@ class babelfy{
         
         ArrayList<TagWord> concepts = this.GetTagList(text, true);
         if (concepts.size() > 10){
-            concepts.subList(5, concepts.size()).clear();
+            concepts.subList(10, concepts.size()).clear();
         }
         
         ArrayList<babelfy.TagWord> al= new ArrayList<babelfy.TagWord>();
