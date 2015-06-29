@@ -159,27 +159,9 @@ function GetJobs(cFrom, cPP, CallBackFn, SearchValue, filter){
     if (SearchValue){SeachQueryPart = GetSeachQueryPart(SearchValue);}
     
     var FilterQueryPart = "";
-    var GroupByPart = "";
+
     if(filter){
-        if (filter.uni!== ""){
-            FilterQueryPart += " FILTER (?uni = <" + filter.uni + ">) \n";
-        }
-        
-        if (filter.city!== ""){
-            FilterQueryPart += " FILTER ( ?city = <" + filter.city + ">) \n";
-        }
-        
-        if (filter.salaryscale!== ""){
-            FilterQueryPart += " ?job onto:salaryscale \"" + filter.salaryscale + "\". \n";
-        }
-        
-        if (filter.keywords.length > 0){
-           
-             for (var i = 0; i < filter.keywords.length; i++) {
-                 FilterQueryPart += " ?job onto:keywords ?keywords" + i + ". ";
-                FilterQueryPart += " ?keywords" + i + " onto:babelres <" + filter.keywords[i] + ">. ";
-            }
-        }
+        FilterQueryPart = GetFilterQueryPart(filter);
     }
     
     var query = PREFIXE +
@@ -203,10 +185,9 @@ function GetJobs(cFrom, cPP, CallBackFn, SearchValue, filter){
                 " FILTER(langMatches(lang(?uniname), \"EN\")) \n" +
                 SeachQueryPart +
                 FilterQueryPart +
-                "}" + 
-                GroupByPart +
-                "LIMIT   " + cPP + " " +
-                "OFFSET  " + cFrom;
+                "} ORDER BY ?uniname ?salaryscale  \n" + 
+                "LIMIT   " + cPP + " \n" +
+                " OFFSET  " + cFrom;
         
         Console("Abruf aller Jobs", query);
               
@@ -243,8 +224,32 @@ function GetSeachQueryPart(Searchvalue){
     
     return "FILTER(" + querystring + ")";
     
-     
+}
+
+function GetFilterQueryPart(filter){
+    var FilterQueryPart = "";
     
+    if (filter.uni!== ""){
+            FilterQueryPart += " FILTER (?uni = <" + filter.uni + ">) \n";
+        }
+        
+        if (filter.city!== ""){
+            FilterQueryPart += " FILTER ( ?city = <" + filter.city + ">) \n";
+        }
+        
+        if (filter.salaryscale!== ""){
+            FilterQueryPart += " ?job onto:salaryscale \"" + filter.salaryscale + "\". \n";
+        }
+        
+        if (filter.keywords.length > 0){
+           
+             for (var i = 0; i < filter.keywords.length; i++) {
+                 FilterQueryPart += " ?job onto:keywords ?keywords" + i + ". ";
+                FilterQueryPart += " ?keywords" + i + " onto:babelres <" + filter.keywords[i] + ">. ";
+            }
+        }
+    
+    return FilterQueryPart;
 }
 
 function GetJobDetails(uid, CallBackFn){
